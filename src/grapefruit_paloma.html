@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cocktail Bar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo-container">
+            <div class="logo-text">COCKTAIL BAR</div>
+            <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="Logo" class="logo-img">
+        </div>
+        <ul class="nav-links">
+            <li><a href="#">Recipe Book</a></li>
+            <li><a href="#">Tool Book</a></li>
+        </ul>
+    </nav>  
+</body>
+</html>

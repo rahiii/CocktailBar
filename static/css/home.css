@@ -1,0 +1,62 @@
+.hero-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1.5rem;
+}
+
+.hero-image img {
+    width: 100%;     /* or any size you prefer */
+    max-width: 70%;
+    height: auto;
+}
+
+.learn-section {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.learn-section h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+    font-family: Tahoma, sans-serif;
+}
+
+.button-row {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+/* Base button style */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 1rem;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover effect */
+.btn:hover {
+    transform: scale(1.05);
+}
+
+/* Themed colors */
+.martini {
+    background-color: #d1495b; /* reddish-orange */
+}
+
+.sunrise {
+    background-color: #f28e1c; /* sunrise orange */
+}
+
+.paloma {
+    background-color: #e07a5f; /* grapefruit pink */
+}
