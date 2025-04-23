@@ -9,7 +9,11 @@ def home():
 
 @app.route('/bloody-orange-martini')
 def bloody_orange_martini():
-    return render_template('bloody_orange_martini.html')
+    return render_template('bloody_orange_martini/bloody_orange_martini.html')
+
+@app.route('/bloody-orange-martini-2')
+def bloody_orange_martini_2():
+    return render_template('bloody_orange_martini/bloody_orange_martini_2.html')
 
 @app.route('/tequila-sunrise')
 def tequila_sunrise():
