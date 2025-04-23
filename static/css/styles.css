@@ -36,6 +36,7 @@ body {
     text-decoration: none;
     color: black;
     transition: color 0.3s ease;
+    font-family: Helvetica;
 }
 
 .nav-links a:hover {
@@ -58,4 +59,74 @@ body {
     font-family: Tahoma;
     color: black;
     font-weight: bold;
+}
+
+
+/* QUIZ SIDEBAR CSS */
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: #fff;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 60px;
+    z-index: 1000;
+}
+
+.sidebar .closebtn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 30px;
+    text-decoration: none;
+    color: black;
+}
+
+.quiz-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+}
+
+.drink {
+    text-align: center;
+}
+
+.drink img {
+    width: 150px;
+    height: auto;
+    border-radius: 10px;
+}
+
+.drink p {
+    margin-top: 10px;
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: bold;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: none;
+    z-index: 999;
+}
+
+.sidebar {
+    height: 100%;
+    width: 300px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #fff;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+    padding-top: 60px;
 }
