@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tequila Sunrise Quiz</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}">
+</head>
+<body>
+    <h1>Tequila Sunrise Quiz</h1>
+
+    <form id="quizForm">
+        <div class="question">
+            <h3>1. What is the base spirit in a Tequila Sunrise?</h3>
+            <div class="choices">
+                <label><input type="radio" name="q1" value="a"> Vodka</label>
+                <label><input type="radio" name="q1" value="b"> Tequila</label>
+                <label><input type="radio" name="q1" value="c"> Gin</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>2. Which fruit juice gives the drink its orange color?</h3>
+            <div class="choices">
+                <label><input type="radio" name="q2" value="a"> Pineapple juice</label>
+                <label><input type="radio" name="q2" value="b"> Orange juice</label>
+                <label><input type="radio" name="q2" value="c"> Mango juice</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>3. What ingredient creates the “sunrise” gradient effect?</h3>
+            <div class="choices">
+                <label><input type="radio" name="q3" value="a"> Grenadine</label>
+                <label><input type="radio" name="q3" value="b"> Bitters</label>
+                <label><input type="radio" name="q3" value="c"> Campari</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>4. What is a typical garnish for a Tequila Sunrise?</h3>
+            <div class="choices">
+                <label><input type="radio" name="q4" value="a"> Mint sprig</label>
+                <label><input type="radio" name="q4" value="b"> Cherry and orange slice</label>
+                <label><input type="radio" name="q4" value="c"> Lime wheel</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>5. In which decade did the Tequila Sunrise become widely popular in the U.S.?</h3>
+            <div class="choices">
+                <label><input type="radio" name="q5" value="a"> 1960s</label>
+                <label><input type="radio" name="q5" value="b"> 1970s</label>
+                <label><input type="radio" name="q5" value="c"> 1980s</label>
+            </div>
+        </div>
+
+        <button type="submit" class="submit-btn">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('quizForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thanks for taking the quiz! Answers are not graded in this demo.');
+        });
+    </script>
+</body>
+</html>

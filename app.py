@@ -7,6 +7,8 @@ app = Flask(__name__, template_folder='src')
 def home():
     return render_template('home.html')
 
+
+#page routes
 @app.route('/bloody-orange-martini')
 def bloody_orange_martini():
     return render_template('bloody_orange_martini/bloody_orange_martini.html')
@@ -22,6 +24,21 @@ def tequila_sunrise():
 @app.route('/grapefruit-paloma')
 def grapefruit_paloma():
     return render_template('grapefruit_paloma.html')
+
+
+#quiz routes
+@app.route('/bloody-orange-martini-quiz')
+def bloody_orange_martini_quiz():
+    return render_template('/bloody_orange_martini/bloody_orange_martini_quiz.html')
+
+@app.route('/tequila-sunrise-quiz')
+def tequila_sunrise_quiz():
+    return render_template('/tequila_sunrise/tequila_sunrise_quiz.html')
+
+@app.route('/grapefruit-paloma-quiz')
+def grapefruit_paloma_quiz():
+    return render_template('/grapefruit_paloma/grapefruit_paloma_quiz.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)

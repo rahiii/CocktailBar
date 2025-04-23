@@ -65,16 +65,20 @@ body {
 /* QUIZ SIDEBAR CSS */
 .sidebar {
     height: 100%;
-    width: 0;
-    position: fixed;
+    width: 300px;
+    position: absolute;
     top: 0;
     right: 0;
-    background-color: #fff;
-    box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+    background-color: #fdf5e6;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
     overflow-x: hidden;
-    transition: 0.3s;
     padding-top: 60px;
     z-index: 1000;
+    transition: width 0.3s ease-in-out;
+}
+
+.sidebar.active {
+    width: 300px;
 }
 
 .sidebar .closebtn {
@@ -96,6 +100,16 @@ body {
 
 .drink {
     text-align: center;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    margin: 10px 0;
+    transition: background 0.2s;
+}
+
+.drink:hover {
+    background-color: #f2f2f2;
+    border-radius: 10px;
 }
 
 .drink img {
@@ -118,15 +132,4 @@ body {
     width: 100%;
     display: none;
     z-index: 999;
-}
-
-.sidebar {
-    height: 100%;
-    width: 300px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-color: #fff;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
-    padding-top: 60px;
 }

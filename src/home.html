@@ -22,22 +22,22 @@
         <div id="quizSidebar" class="sidebar" onclick="event.stopPropagation()">
             <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">×</a>
             <div class="quiz-content">
-                <div class="drink">
+                <a href="{{ url_for('bloody_orange_martini_quiz') }}" class="drink">
                     <img src="{{ url_for('static', filename='images/cocktails.png') }}" alt="Bloody Orange Martini">
                     <p>Bloody Orange Martini</p>
-                </div>
-                <div class="drink">
+                </a>
+                <a href="{{ url_for('tequila_sunrise_quiz') }}" class="drink">
                     <img src="{{ url_for('static', filename='images/cocktails.png') }}" alt="Tequila Sunrise">
                     <p>Tequila Sunrise</p>
-                </div>
-                <div class="drink">
+                </a>
+                <a href="{{ url_for('grapefruit_paloma_quiz') }}" class="drink">
                     <img src="{{ url_for('static', filename='images/cocktails.png') }}" alt="Grapefruit Paloma">
                     <p>Grapefruit Paloma</p>
-                </div>
+                </a>
             </div>
         </div>
     </div>
-
+    
     <div class="hero-image">
         <img src="{{ url_for('static', filename='images/cocktails.png') }}" alt="Cocktails">
     </div>   

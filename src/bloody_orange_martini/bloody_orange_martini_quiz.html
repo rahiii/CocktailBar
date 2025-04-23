@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bloody Orange Martini Quiz</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}">
+    
+</head>
+<body>
+    <h1>Bloody Orange Martini Quiz</h1>
+
+    <form id="quizForm">
+        <div class="question">
+            <h3>1. What is the base spirit in a Bloody Orange Martini?</h3>
+            <div class="choices">
+                <label><input type="radio" name="q1" value="a"> Vodka</label>
+                <label><input type="radio" name="q1" value="b"> Rum</label>
+                <label><input type="radio" name="q1" value="c"> Gin</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>2. What citrus fruit gives the drink its name?</h3>
+            <div class="choices">
+                <label><input type="radio" name="q2" value="a"> Blood Orange</label>
+                <label><input type="radio" name="q2" value="b"> Grapefruit</label>
+                <label><input type="radio" name="q2" value="c"> Lemon</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>3. What is a common garnish for this cocktail?</h3>
+            <div class="choices">
+                <label><input type="radio" name="q3" value="a"> Orange peel</label>
+                <label><input type="radio" name="q3" value="b"> Basil leaf</label>
+                <label><input type="radio" name="q3" value="c"> Cherry</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>4. What kind of glass is usually used?</h3>
+            <div class="choices">
+                <label><input type="radio" name="q4" value="a"> Highball</label>
+                <label><input type="radio" name="q4" value="b"> Coupe</label>
+                <label><input type="radio" name="q4" value="c"> Martini</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <h3>5. Which of these is a typical additional ingredient?</h3>
+            <div class="choices">
+                <label><input type="radio" name="q5" value="a"> Simple syrup</label>
+                <label><input type="radio" name="q5" value="b"> Triple sec</label>
+                <label><input type="radio" name="q5" value="c"> Bitters</label>
+            </div>
+        </div>
+
+        <button type="submit" class="submit-btn">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('quizForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thanks for taking the quiz! Answers are not graded in this demo.');
+        });
+    </script>
+</body>
+</html>
