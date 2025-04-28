@@ -17,6 +17,11 @@ def bloody_orange_martini():
 def bloody_orange_martini_2():
     return render_template('bloody_orange_martini/bloody_orange_martini_2.html')
 
+@app.route('/bloody-orange-martini-3')
+def bloody_orange_martini_3():
+    return render_template('bloody_orange_martini/bloody_orange_martini_3.html')
+
+
 @app.route('/tequila-sunrise')
 def tequila_sunrise():
     return render_template('tequila_sunrise.html')

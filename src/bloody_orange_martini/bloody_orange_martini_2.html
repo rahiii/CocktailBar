@@ -1,43 +1,273 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cocktail Bar</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cocktail Bar</title>
+
+  <!-- External Styles -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}" />
+
+  <!-- Inline Styles -->
+  <style>
+    /* Base */
+    body {
+      background: #fff8ea;
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    /* Step Tag */
+    .step-tag {
+      display: inline-block;
+      margin: 2rem 1.5rem 1.5rem;
+      padding: 0.5rem 1rem;
+      font-weight: bold;
+      border: 2px solid #f3ca41;
+      background: #fffbe2;
+    }
+    /* Instructions */
+    .instructions {
+      float: left;
+      width: 320px;
+      margin-left: 1.5rem;
+      padding: 1.5rem;
+      border: 2px solid #4d6fb3;
+      background: #d4e1fa;
+      font-size: 1.1rem;
+    }
+    .instructions h2 {
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+      text-align: center;
+      color: #444;
+    }
+    .warning {
+      margin-bottom: 1rem;
+      color: red;
+      font-weight: bold;
+      text-align: center;
+    }
+    /* Shaker Area */
+    .shaker-area {
+      position: relative;
+      margin-left: 360px;
+      min-height: 600px;
+    }
+    .shaker {
+      display: block;
+      width: 140px;
+      margin: 100px auto 0;
+    }
+    /* Ingredients */
+    .ingredient {
+      position: absolute;
+      width: 80px;
+      cursor: grab;
+    }
+    .ingredient img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    /* Congrats Button (styled anchor) */
+    .congrats-btn {
+      display: block;
+      margin: 1rem auto;
+      padding: 0.75rem 1.2rem;
+      background: #d4f8d4;
+      color: #2a7f2a;
+      border: 2px solid #2a7f2a;
+      border-radius: 4px;
+      text-align: center;
+      text-decoration: none;
+      font-weight: bold;
+      max-width: 320px;
+      cursor: pointer;
+    }
+    .congrats-btn:hover {
+      background: #b3eab3;
+    }
+    /* Modal */
+    .modal {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .modal.hidden { display: none; }
+    .modal-content {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 6px;
+      width: 90%; max-width: 320px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .modal-content h3 {
+      margin-top: 0;
+      font-size: 1.2rem;
+    }
+    .modal-content form {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .modal-content label {
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .modal-content input[type="radio"] {
+      margin-right: 0.5rem;
+    }
+    .modal-content button {
+      margin-top: 1rem;
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: 2px solid #4d6fb3;
+      background: #4d6fb3;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+  </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="logo-container">
-            <div class="logo-text">COCKTAIL BAR</div>
-            <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="Logo" class="logo-img">
-        </div>
-        <ul class="nav-links">
-            <li><a href="#">Quiz</a></li>
-        </ul>
-    </nav>  
-    <!-- jQuery and Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo-container">
+      <div class="logo-text">COCKTAIL BAR</div>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Cocktail_icon.png"
+           alt="Logo" class="logo-img" style="width:28px; height:28px;">
+    </div>
+    <ul class="nav-links"><li><a href="#">Quiz</a></li></ul>
+  </nav>
 
-    
+  <!-- Step Indicator -->
+  <div class="step-tag">Step 2) Prepare the Drink</div>
 
+  <!-- Instructions -->
+  <div class="instructions">
+    <h2>DRAG AND DROP AN ITEM</h2>
+    <div class="warning">BE CAREFUL NOT TO MESS UP THE DRINK!</div>
+    <ul>
+      <li>the tequila</li>
+      <li>lime juice</li>
+      <li>triple sec</li>
+    </ul>
+  </div>
 
+  <!-- Shaker + Ingredients -->
+  <div class="shaker-area">
+    <img id="shaker" class="shaker"
+         src="https://shop.abarabove.com/cdn/shop/products/Boston_Shaker_-_W_UW_-_SS_-_White_Background_-_13_dc718e0f-8da0-40a8-a617-51f5b2a7d22c.jpg?v=1741635951"
+         alt="Cocktail Shaker" ondrop="drop(event)" ondragover="allowDrop(event)" />
 
+    <div id="tequila" class="ingredient" style="top:20px; left:30%;"
+         draggable="true" ondragstart="drag(event)">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-5lvJk2qxk0ohcvw2yBSwFSfluw_cxw_Q2g&s"
+           alt="Tequila" />
+    </div>
+    <div id="lime" class="ingredient" style="top:140px; left:70%;"
+         draggable="true" ondragstart="drag(event)">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3TgmqRNaa31ZAEHgjB8GD42_s7Kuvr0EOxA&s"
+           alt="Lime Juice" />
+    </div>
+    <div id="triple" class="ingredient" style="top:260px; left:30%;"
+         draggable="true" ondragstart="drag(event)">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9NeoL81aPjH3x7hfXjp3S-LCx9TkJjMpT7w&s"
+           alt="Triple Sec" />
+    </div>
+    <div id="wrong" class="ingredient" style="top:380px; left:70%;"
+         draggable="true" ondragstart="drag(event)">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQglR8-ftxTVMitpthJjqA_vpI4Rty16iBaFA&s"
+           alt="Wrong Ingredient" />
+    </div>
+  </div>
 
+  <!-- Congrats button placeholder -->
+  <!-- (Injected by JS when all three are correct) -->
 
+  <!-- Quiz Modal -->
+  <div id="quiz-modal" class="modal hidden">
+    <div class="modal-content">
+      <h3 id="quiz-question">Quiz question?</h3>
+      <form id="quiz-form"></form>
+    </div>
+  </div>
 
+  <!-- JS Logic -->
+  <script>
+    const modal       = document.getElementById('quiz-modal');
+    const questionEl  = document.getElementById('quiz-question');
+    const form        = document.getElementById('quiz-form');
+    let currentId     = null;
+    let correctCount  = 0;
 
+    // Choices & correct answers
+    const choices = {
+      tequila: ['1 oz','1.5 oz','2 oz','2.5 oz'],
+      lime:    ['0.5 oz','1 oz','1.5 oz','2 oz'],
+      triple:  ['0.5 oz','1 oz','1.5 oz','2 oz']
+    };
+    const correct = {
+      tequila: '1.5 oz',
+      lime:    '1 oz',
+      triple:  '1 oz'
+    };
 
+    function allowDrop(ev) {
+      ev.preventDefault();
+    }
+    function drag(ev) {
+      ev.dataTransfer.setData('text', ev.currentTarget.id);
+    }
+    function drop(ev) {
+      ev.preventDefault();
+      const id = ev.dataTransfer.getData('text');
+      if (id === 'wrong') {
+        alert("Oops! That's not an ingredient for this drink!");
+        return;
+      }
+      // Show quiz modal
+      currentId = id;
+      questionEl.textContent =
+        `How much ${id.charAt(0).toUpperCase()+id.slice(1)} did you pour?`;
+      form.innerHTML = choices[id]
+        .map(opt => `<label><input type="radio" name="amount" value="${opt}" required /> ${opt}</label>`)
+        .join('') + `<button type="submit">Submit</button>`;
+      modal.classList.remove('hidden');
+    }
 
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const answer = form.amount.value;
+      if (answer !== correct[currentId]) {
+        alert('Wrong answer — please try again!');
+        return;
+      }
+      // Remove ingredient
+      const el = document.getElementById(currentId);
+      if (el) el.remove();
 
+      modal.classList.add('hidden');
+      correctCount++;
 
+      // All three done → show clickable congrats
+      if (correctCount === 3) {
+        const nextUrl = "{{ url_for('bloody_orange_martini_3') }}"; 
+        const btn = document.createElement('a');
+        btn.className = 'congrats-btn';
+        btn.href      = nextUrl;
+        btn.textContent = '🎉 Congratulations! Click to move to the next step.';
+        document.body.appendChild(btn);
+      }
+    });
 
-
-
-
-
-
+    // Close modal on outside click
+    modal.addEventListener('click', e => {
+      if (e.target === modal) modal.classList.add('hidden');
+    });
+  </script>
 </body>
 </html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cocktail Bar</title>
+
+  <!-- keep this if you have additional global styles -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+  <!-- ===== extra CSS for Step 3 ===== -->
+  <style>
+    /* ----- basic reset / fonts ----- */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fff8ea;
+      color: #333;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      border-bottom: 2px solid #333;
+      background: #fff8ea;
+    }
+
+    /* Step 3 layout */
+    .cocktail-wrapper {
+      display: flex;
+      gap: 2rem;
+      padding: 2rem 1.5rem;
+    }
+    .left-panel {
+      flex: 1 1 45ch;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .right-panel {
+      flex: 2 1 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Step tag */
+    .step-tag {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border: 2px solid #f3ca41;
+      background: #fffbe2;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    /* Instruction box */
+    .shake-instructions {
+      background: #d4e1fa;
+      border: 2px solid #4d6fb3;
+      padding: 1.5rem;
+      font-size: 1.1rem;
+      line-height: 1.4;
+    }
+    .shake-instructions strong {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+
+    /* Animation */
+    .shake-animation {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    /* Next Step button */
+    .next-btn {
+      display: block;
+      margin: 2rem 2rem 2rem auto;
+      padding: 0.5rem 1.2rem;
+      font-size: 1.4rem;
+      color: #333;
+      border: 3px solid #4d6fb3;
+      background: #fff;
+      transition: background 0.15s, color 0.15s;
+    }
+    .next-btn:hover {
+      background: #4d6fb3;
+      color: #fff;
+    }
+
+    /* Mobile stack */
+    @media (max-width: 800px) {
+      .cocktail-wrapper { flex-direction: column; }
+      .right-panel    { margin-top: 2rem; }
+      .next-btn       { margin: 2rem auto; }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="logo-container">
+      <div class="logo-text">COCKTAIL BAR</div>
+      <img
+        src="{{ url_for('static', filename='images/Logo.png') }}"
+        alt="Logo"
+        class="logo-img"
+      >
+    </div>
+    <ul class="nav-links">
+      <li><a href="#">Recipe Book</a></li>
+      <li><a href="#">Tool Book</a></li>
+    </ul>
+  </nav>
+
+  <main class="cocktail-wrapper">
+    <!-- Left column: instructions -->
+    <section class="left-panel">
+      <span class="step-tag">Step 3) Shake The Drink</span>
+      <div class="shake-instructions">
+        <p>Now that all ingredients have been added, we must shake the shaker.</p>
+        <strong>Review the animation to learn proper shaking technique.</strong>
+      </div>
+    </section>
+
+    <!-- Right column: animation -->
+    <section class="right-panel">
+      <img
+        src="https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif"
+        alt="Shaking cocktail animation"
+        class="shake-animation"
+      />
+    </section>
+  </main>
+
+  <!-- Next Step -->
+  <a href="{{ url_for('home') }}" class="next-btn">NEXT STEP</a>
+</body>
+</html>
