@@ -27,3 +27,64 @@ body {
 .submit-btn:hover {
     background-color: #e14c45;
 }
+
+#feedbackList li {
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.correct {
+    color: green;
+    font-weight: bold;
+}
+
+.wrong {
+    color: red;
+    margin-bottom: 15px;
+}
+.wrong-question {
+    color: red;
+}
+
+.results-header {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* space between elements */
+}
+
+.results-header h2 {
+    margin: 0;
+}
+
+.results-header p {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.form-footer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.return-home-text {
+    font-size: 14px;
+}
+
+.home-link {
+    color: #ff7043;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.home-link:hover {
+    text-decoration: underline;
+}
+
+.results-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}

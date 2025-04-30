@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bloody Orange Martini Quiz</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}">
-    
+    <style>
+        .hidden { display: none; }
+        .correct { color: green; }
+        .wrong { color: red; }
+    </style>
 </head>
 <body>
     <h1>Bloody Orange Martini Quiz</h1>
@@ -56,14 +60,24 @@
             </div>
         </div>
 
-        <button type="submit" class="submit-btn">Submit</button>
+        <div class="form-footer">
+            <button type="submit" class="submit-btn">Submit</button>
+            <span class="return-home-text">
+                <a href="/" class="home-link">Return to Homepage</a>
+            </span>
+        </div>
     </form>
 
-    <script>
-        document.getElementById('quizForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thanks for taking the quiz! Answers are not graded in this demo.');
-        });
-    </script>
+    <div id="resultsPage" class="hidden">
+        <div class="results-header">
+            <h2>Results:</h2>
+            <p id="scoreText"></p>
+        </div>
+        <ul id="feedbackList"></ul>
+        <div class="results-footer">
+            <button class="submit-btn" onclick="window.location.href='/'">Return to Homepage</button>
+        </div>
+    </div>
+    <script src="/static/js/bloodyorangemartini.js"></script>
 </body>
 </html>
