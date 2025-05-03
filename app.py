@@ -7,7 +7,6 @@ app = Flask(__name__, template_folder='src')
 def home():
     return render_template('home.html')
 
-
 #page routes
 @app.route('/bloody-orange-martini')
 def bloody_orange_martini():

@@ -1,17 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cocktail Bar</title>
+{% extends 'navbar.html' %}
 
-  <!-- External Styles -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}" />
+{% block title %}Step 2 – Prepare the Drink | Cocktail Bar{% endblock %}
 
-  <!-- Inline Styles -->
+{% block extra_head %}
+  <!-- page-specific CSS -->
   <style>
-    /* Base */
     body {
       background: #fff8ea;
       margin: 0;
@@ -90,10 +83,13 @@
     }
     /* Modal */
     .modal {
-      position: fixed; top: 0; left: 0;
+      position: fixed;
+      top: 0; left: 0;
       width: 100%; height: 100%;
       background: rgba(0,0,0,0.5);
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .modal.hidden { display: none; }
     .modal-content {
@@ -131,22 +127,11 @@
       border-radius: 4px;
     }
   </style>
-</head>
-<body>
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="logo-container">
-      <div class="logo-text">COCKTAIL BAR</div>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Cocktail_icon.png"
-           alt="Logo" class="logo-img" style="width:28px; height:28px;">
-    </div>
-    <ul class="nav-links"><li><a href="#">Quiz</a></li></ul>
-  </nav>
+{% endblock %}
 
-  <!-- Step Indicator -->
+{% block content %}
   <div class="step-tag">Step 2) Prepare the Drink</div>
 
-  <!-- Instructions -->
   <div class="instructions">
     <h2>DRAG AND DROP AN ITEM</h2>
     <div class="warning">BE CAREFUL NOT TO MESS UP THE DRINK!</div>
@@ -157,11 +142,11 @@
     </ul>
   </div>
 
-  <!-- Shaker + Ingredients -->
   <div class="shaker-area">
     <img id="shaker" class="shaker"
          src="https://shop.abarabove.com/cdn/shop/products/Boston_Shaker_-_W_UW_-_SS_-_White_Background_-_13_dc718e0f-8da0-40a8-a617-51f5b2a7d22c.jpg?v=1741635951"
-         alt="Cocktail Shaker" ondrop="drop(event)" ondragover="allowDrop(event)" />
+         alt="Cocktail Shaker"
+         ondrop="drop(event)" ondragover="allowDrop(event)" />
 
     <div id="tequila" class="ingredient" style="top:20px; left:30%;"
          draggable="true" ondragstart="drag(event)">
@@ -185,18 +170,17 @@
     </div>
   </div>
 
-  <!-- Congrats button placeholder -->
-  <!-- (Injected by JS when all three are correct) -->
-
-  <!-- Quiz Modal -->
+  <!-- Quiz Modal (shared logic can remain) -->
   <div id="quiz-modal" class="modal hidden">
     <div class="modal-content">
       <h3 id="quiz-question">Quiz question?</h3>
       <form id="quiz-form"></form>
     </div>
   </div>
+{% endblock %}
 
-  <!-- JS Logic -->
+{% block extra_js %}
+  <!-- page-specific drag/drop + quiz logic -->
   <script>
     const modal       = document.getElementById('quiz-modal');
     const questionEl  = document.getElementById('quiz-question');
@@ -204,24 +188,15 @@
     let currentId     = null;
     let correctCount  = 0;
 
-    // Choices & correct answers
     const choices = {
       tequila: ['1 oz','1.5 oz','2 oz','2.5 oz'],
       lime:    ['0.5 oz','1 oz','1.5 oz','2 oz'],
       triple:  ['0.5 oz','1 oz','1.5 oz','2 oz']
     };
-    const correct = {
-      tequila: '1.5 oz',
-      lime:    '1 oz',
-      triple:  '1 oz'
-    };
+    const correct = { tequila: '1.5 oz', lime: '1 oz', triple: '1 oz' };
 
-    function allowDrop(ev) {
-      ev.preventDefault();
-    }
-    function drag(ev) {
-      ev.dataTransfer.setData('text', ev.currentTarget.id);
-    }
+    function allowDrop(ev) { ev.preventDefault(); }
+    function drag(ev)      { ev.dataTransfer.setData('text', ev.currentTarget.id); }
     function drop(ev) {
       ev.preventDefault();
       const id = ev.dataTransfer.getData('text');
@@ -229,7 +204,6 @@
         alert("Oops! That's not an ingredient for this drink!");
         return;
       }
-      // Show quiz modal
       currentId = id;
       questionEl.textContent =
         `How much ${id.charAt(0).toUpperCase()+id.slice(1)} did you pour?`;
@@ -246,28 +220,20 @@
         alert('Wrong answer — please try again!');
         return;
       }
-      // Remove ingredient
-      const el = document.getElementById(currentId);
-      if (el) el.remove();
-
+      document.getElementById(currentId)?.remove();
       modal.classList.add('hidden');
       correctCount++;
-
-      // All three done → show clickable congrats
       if (correctCount === 3) {
-        const nextUrl = "{{ url_for('bloody_orange_martini_3') }}"; 
         const btn = document.createElement('a');
-        btn.className = 'congrats-btn';
-        btn.href      = nextUrl;
-        btn.textContent = '🎉 Congratulations! Click to move to the next step.';
+        btn.className    = 'congrats-btn';
+        btn.href         = "{{ url_for('bloody_orange_martini_3') }}";
+        btn.textContent  = '🎉 Congratulations! Click to move to the next step.';
         document.body.appendChild(btn);
       }
     });
 
-    // Close modal on outside click
     modal.addEventListener('click', e => {
       if (e.target === modal) modal.classList.add('hidden');
     });
   </script>
-</body>
-</html>
+{% endblock %}
