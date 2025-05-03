@@ -1,4 +1,5 @@
-/* Base styles */
+/* styling for site in general */
+
 body {
     margin: 0;
     padding: 0;
@@ -6,24 +7,22 @@ body {
     background-color: #fdf5e6; 
     font-size: 20px;
 }
-
-/* Navbar styles */
+/* ---------------------------------------------------------- */
+/* NAVBAR STYLING */
 .navbar {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end; /* aligns to the bottom */
+    align-items: flex-end;
     padding: 1.5rem 2.5rem 1.0rem 2.5rem;
     border-bottom: 1px solid #ccc; 
 }
 
-/* Logo/title on the left */
 .logo {
     font-size: 2.5rem;
     font-family: Tahoma;
     color: black;
 }
 
-/* Navigation links on the right */
 .nav-links {
     list-style: none;
     display: flex;
@@ -61,25 +60,37 @@ body {
     font-weight: bold;
 }
 
+.logo-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;  /* remove underline */
+    color: inherit;         /* keep the same color as .logo-text */
+    cursor: pointer;
+  }
 
-/* QUIZ SIDEBAR CSS */
+/* ---------------------------------------------------------- */
+/* QUIZ SIDEBAR STYLING */
+
 .sidebar {
-    height: 100%;
-    width: 300px;
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
+    bottom: 0;
+    width: 300px;
     background-color: #fdf5e6;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
-    overflow-x: hidden;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+    overflow-y: auto;
+    overflow-x: hidden;    
     padding-top: 60px;
     z-index: 1000;
-    transition: width 0.3s ease-in-out;
-}
+    transform: translateX(100%);
+  }
 
-.sidebar.active {
-    width: 300px;
-}
+  .sidebar.active {
+    transform: translateX(0);
+  }
+
 
 .sidebar .closebtn {
     position: absolute;
@@ -133,3 +144,7 @@ body {
     display: none;
     z-index: 999;
 }
+
+body.no-scroll {
+    overflow: hidden;
+  }

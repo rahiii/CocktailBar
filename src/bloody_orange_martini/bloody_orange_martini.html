@@ -1,54 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cocktail Bar</title>
+{% extends 'navbar.html' %}
 
-  <!-- keep this if you have additional global styles -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+{% block title %}Classic Margarita – Cocktail Bar{% endblock %}
 
-  <!-- ===== extra CSS for the cocktail page ===== -->
+{% block extra_head %}
+  <!-- page-specific CSS inlined -->
   <style>
-    /* ----- basic reset / fonts ----- */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    /* reset & base */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-                   Roboto, sans-serif;
-      background: #fff8ea;     /* light cream */
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fff8ea; /* light cream */
       color: #333;
     }
 
-    /* (optional) quick navbar polish so colors match the screenshot */
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.75rem 1rem;
-      border-bottom: 2px solid #333;
-      background: #fff8ea;
-    }
-    .logo-container { display: flex; align-items: center; gap: 0.5rem; }
-    .logo-text   { font-weight: 700; font-size: 1.4rem; }
-    .logo-img    { width: 28px; height: 28px; }
-    .nav-links   { list-style: none; display: flex; gap: 1.25rem; }
-    .nav-links a { text-decoration: none; font-weight: 600; color: #333; }
-    .nav-links a:hover { text-decoration: underline; }
-
-    /* ===== cocktail layout ===== */
+    /* layout */
     .cocktail-wrapper {
       display: flex;
       gap: 2.5rem;
       padding: 2rem 1.5rem;
     }
-
-    /* -- left column -- */
     .left-panel {
       flex: 1 1 45ch;
       display: flex;
       flex-direction: column;
       gap: 1.25rem;
     }
+    .right-panel {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 1.5rem;
+    }
+
+    /* step tag */
     .step-tag {
       align-self: flex-start;
       font-weight: 700;
@@ -58,6 +47,8 @@
       border-radius: 3px;
       font-size: 1rem;
     }
+
+    /* ingredients card */
     .ingredients-card {
       border: 3px solid #4d6fb3;
       border-radius: 3px;
@@ -76,14 +67,7 @@
       font-size: 1.1rem;
     }
 
-    /* -- right column -- */
-    .right-panel {
-      flex: 1 1 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 1.5rem;
-    }
+    /* images & buttons */
     .drink-photo {
       width: 100%;
       max-width: 540px;
@@ -104,33 +88,26 @@
       color: #fff;
     }
 
-    /* ===== mobile stack ===== */
+    /* mobile */
     @media (max-width: 700px) {
-      .cocktail-wrapper { flex-direction: column; }
-      .right-panel      { align-items: stretch; }
-      .next-btn         { align-self: flex-start; }
+      .cocktail-wrapper {
+        flex-direction: column;
+      }
+      .right-panel {
+        align-items: stretch;
+      }
+      .next-btn {
+        align-self: flex-start;
+      }
     }
   </style>
-</head>
+{% endblock %}
 
-<body>
-  <nav class="navbar">
-    <div class="logo-container">
-      <div class="logo-text">COCKTAIL BAR</div>
-      <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="Logo" class="logo-img">
-    </div>
-    <ul class="nav-links">
-      <li><a href="#">Recipe Book</a></li>
-      <li><a href="#">Tool Book</a></li>
-    </ul>
-  </nav>
-
-  <!-- === Main cocktail content – goes right after your navbar === -->
+{% block content %}
   <main class="cocktail-wrapper">
     <!-- left column -->
     <section class="left-panel">
       <span class="step-tag">Step 1 Collect Ingredients</span>
-
       <div class="ingredients-card">
         <h2>Classic Margarita Ingredients</h2>
         <ul>
@@ -152,9 +129,9 @@
         alt="Classic margarita with salt rim and lime wheel"
         class="drink-photo"
       />
-      <a href="{{ url_for('bloody_orange_martini_2') }}" class="next-btn">NEXT STEP</a>
-
+      <a href="{{ url_for('bloody_orange_martini_2') }}" class="next-btn">
+        NEXT STEP
+      </a>
     </section>
   </main>
-</body>
-</html>
+{% endblock %}
