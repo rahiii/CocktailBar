@@ -72,7 +72,7 @@
       color: #333;
       border: 3px solid #4d6fb3;
       background: #fff;
-      transition: background 0.15s, color 0.15s;
+      transition: 0.15s, color 0.15s;
     }
     .next-btn:hover {
       background: #4d6fb3;
@@ -92,7 +92,7 @@
   <main class="cocktail-wrapper">
     <!-- Left column: instructions -->
     <section class="left-panel">
-      <span class="step-tag">Step 3) Shake The Drink</span>
+      <span class="step-tag">Step 3 Shake The Drink</span>
       <div class="shake-instructions">
         <p>Now that all ingredients have been added, we must shake the shaker.</p>
         <strong>Review the animation to learn proper shaking technique.</strong>
@@ -110,5 +110,9 @@
   </main>
 
   <!-- Next Step -->
+  <a href="{{ url_for('bloody_orange_martini_4') }}" class="next-btn">NEXT STEP</a>
+</body>
+</html>
   <a href="{{ url_for('home') }}" class="next-btn">NEXT STEP</a>
+  
 {% endblock %}

@@ -7,7 +7,6 @@ app = Flask(__name__, template_folder='src')
 def home():
     return render_template('home.html')
 
-
 #page routes
 @app.route('/bloody-orange-martini')
 def bloody_orange_martini():
@@ -20,6 +19,14 @@ def bloody_orange_martini_2():
 @app.route('/bloody-orange-martini-3')
 def bloody_orange_martini_3():
     return render_template('bloody_orange_martini/bloody_orange_martini_3.html')
+
+@app.route('/bloody-orange-martini-4')
+def bloody_orange_martini_4():
+    return render_template('bloody_orange_martini/bloody_orange_martini_4.html')
+
+@app.route('/bloody-orange-martini-5')
+def bloody_orange_martini_5():
+    return render_template('bloody_orange_martini/bloody_orange_martini_5.html')
 
 
 @app.route('/tequila-sunrise')
