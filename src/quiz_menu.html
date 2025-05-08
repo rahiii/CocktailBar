@@ -1,0 +1,67 @@
+{% extends 'navbar.html' %}
+
+{% block title %}Cocktail Quizzes | Cocktail Bar{% endblock %}
+
+{% block extra_head %}
+<style>
+    body {
+        background: #faf7f4;
+        font-family: system-ui, Roboto, sans-serif
+    }
+
+    .quiz‑grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        padding: 3rem 5vw
+    }
+
+    .card {
+        background: #fff;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, .06);
+        text-align: center;
+        padding: 1.5rem 1rem;
+        transition: .25s
+    }
+
+    .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, .12)
+    }
+
+    .card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 6px
+    }
+
+    .card p {
+        margin-top: 1rem;
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: #333
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="quiz‑grid">
+    <a href="{{ url_for('bloody_orange_martini_quiz') }}" class="card">
+        <img src="{{ url_for('static', filename='images/bloodyorangemartini.png') }}" alt="Bloody Orange Martini">
+        <p>Bloody Orange Martini Quiz</p>
+    </a>
+
+    <a href="{{ url_for('tequila_sunrise_quiz') }}" class="card">
+        <img src="{{ url_for('static', filename='images/tequilasunrise.png') }}" alt="Tequila Sunrise">
+        <p>Tequila Sunrise Quiz</p>
+    </a>
+
+    <a href="{{ url_for('grapefruit_paloma_quiz') }}" class="card">
+        <img src="{{ url_for('static', filename='images/grapefruitpaloma.png') }}" alt="Grapefruit Paloma">
+        <p>Grapefruit Paloma Quiz</p>
+    </a>
+</section>
+{% endblock %}

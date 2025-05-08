@@ -1,0 +1,143 @@
+{% extends 'navbar.html' %}
+{% block title %}Step 5 – Serve | Cocktail Bar{% endblock %}
+
+{% block extra_head %}
+<style>
+    body {
+        background: #fff7f3;
+        font-family: system-ui, Roboto, sans-serif
+    }
+
+    .step-tag {
+        display: inline-block;
+        margin: 2rem 1.5rem 1.5rem;
+        padding: .5rem 1rem;
+        font-weight: bold;
+        border: 2px solid #f4a623;
+        background: #fff1d6
+    }
+
+    .instructions {
+        float: left;
+        width: 320px;
+        margin-left: 1.5rem;
+        padding: 1.5rem;
+        border: 2px solid #d64234;
+        background: #ffe9e4;
+        font-size: 1.05rem
+    }
+
+    .instructions h2 {
+        text-align: center;
+        margin-bottom: .5rem
+    }
+
+    .glass-area {
+        position: relative;
+        margin-left: 360px;
+        min-height: 560px
+    }
+
+    .glass {
+        display: block;
+        width: 180px;
+        margin: 80px auto 0
+    }
+
+    .ingredient {
+        position: absolute;
+        width: 80px;
+        cursor: grab
+    }
+
+    .ingredient img {
+        width: 100%
+    }
+
+    .congrats-btn {
+        display: block;
+        margin: 1rem auto;
+        padding: .75rem 1.2rem;
+        background: #d4f8d4;
+        color: #2a7f2a;
+        border: 2px solid #2a7f2a;
+        border-radius: 4px;
+        text-align: center;
+        font-weight: bold;
+        max-width: 320px
+    }
+
+    /* === progress bar === */
+    .progress-wrapper {
+        width: 100%;
+        height: 8px;
+        background: #e4e4e4;
+    }
+
+    .progress-bar {
+        height: 100%;
+        background: #4d6fb3;
+        width: calc(var(--pct) * 1%);
+        transition: width .25s;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+{% set current = 5 %}
+<div class="progress-wrapper">
+    <div class="progress-bar" style="--pct: {{ current * 20 }};"></div>
+</div>
+
+<div class="step-tag">Step 5 ) Serve & Enjoy!</div>
+
+<div class="instructions">
+    <h2>ADD YOUR GARNISH</h2>
+    <div class="warning" style="margin-bottom:1rem;color:#d64234;font-weight:700;text-align:center">DON'T DROP THE WRONG
+        ITEM!</div>
+    <ul>
+        <li>orange slice</li>
+        <li>cherry</li>
+    </ul>
+</div>
+
+<div class="glass-area">
+    <img id="glass" class="glass"
+        src="https://images.unsplash.com/photo-1497534446932-c925b458314e?auto=format&fit=crop&w=350&q=60"
+        alt="Sunrise glass" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+    <div id="orange" class="ingredient" style="top:20px;left:25%" draggable="true" ondragstart="drag(event)">
+        <img src="https://images.unsplash.com/photo-1601944179205-07d6cbe9ecb3?auto=format&fit=crop&w=200&q=60"
+            alt="Orange slice">
+    </div>
+    <div id="cherry" class="ingredient" style="top:150px;left:70%" draggable="true" ondragstart="drag(event)">
+        <img src="https://images.unsplash.com/photo-1519648023493-d82b5f8d7ac5?auto=format&fit=crop&w=200&q=60"
+            alt="Cherry">
+    </div>
+    <div id="wrong" class="ingredient" style="top:280px;left:25%" draggable="true" ondragstart="drag(event)">
+        <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?auto=format&fit=crop&w=200&q=60"
+            alt="Wrong item">
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function allowDrop(e) { e.preventDefault(); }
+    function drag(e) { e.dataTransfer.setData('text', e.currentTarget.id); }
+    function drop(e) {
+        e.preventDefault();
+        const id = e.dataTransfer.getData('text');
+        if (id === 'wrong') { alert("Not a garnish!"); return; }
+        document.getElementById(id)?.remove();
+        if (!document.getElementById('orange') && !document.getElementById('cherry')) {
+            const btn = document.createElement('a');
+            btn.className = 'congrats-btn';
+            btn.href = "{{ url_for('home') }}";
+            btn.textContent = '🎉 Tequila Sunrise ready! Return Home';
+            document.body.appendChild(btn);
+        }
+    }
+</script>
+{% endblock %}

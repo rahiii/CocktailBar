@@ -1,0 +1,229 @@
+{% extends 'navbar.html' %}
+{% block title %}Step 2 – Build the Drink | Cocktail Bar{% endblock %}
+
+{% block extra_head %}
+<style>
+    body {
+        background: #fff7f3;
+        font-family: system-ui, Roboto, sans-serif
+    }
+
+    .step-tag {
+        display: inline-block;
+        margin: 2rem 1.5rem 1.5rem;
+        padding: .5rem 1rem;
+        font-weight: bold;
+        border: 2px solid #f4a623;
+        background: #fff1d6
+    }
+
+    .instructions {
+        float: left;
+        width: 320px;
+        margin-left: 1.5rem;
+        padding: 1.5rem;
+        border: 2px solid #d64234;
+        background: #ffe9e4;
+        font-size: 1.05rem
+    }
+
+    .instructions h2 {
+        text-align: center;
+        margin-bottom: .5rem
+    }
+
+    .warning {
+        color: #d64234;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 1rem
+    }
+
+    .glass-area {
+        position: relative;
+        margin-left: 360px;
+        min-height: 600px
+    }
+
+    .glass {
+        display: block;
+        width: 140px;
+        margin: 100px auto 0
+    }
+
+    .ingredient {
+        position: absolute;
+        width: 80px;
+        cursor: grab
+    }
+
+    .ingredient img {
+        width: 100%
+    }
+
+    .congrats-btn {
+        display: block;
+        margin: 1rem auto;
+        padding: .75rem 1.2rem;
+        background: #d4f8d4;
+        color: #2a7f2a;
+        border: 2px solid #2a7f2a;
+        border-radius: 4px;
+        text-align: center;
+        font-weight: bold;
+        max-width: 320px
+    }
+
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, .5);
+        display: flex;
+        align-items: center;
+        justify-content: center
+    }
+
+    .modal.hidden {
+        display: none
+    }
+
+    .modal-content {
+        background: #fff;
+        padding: 1.5rem;
+        border-radius: 6px;
+        width: 90%;
+        max-width: 320px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, .2)
+    }
+
+    .modal-content form {
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+        margin-top: 1rem
+    }
+
+    .modal-content button {
+        margin-top: 1rem;
+        padding: .5rem;
+        font-size: 1rem;
+        border: 2px solid #d64234;
+        background: #d64234;
+        color: #fff;
+        border-radius: 4px
+    }
+
+    /* === progress bar === */
+    .progress-wrapper {
+        width: 100%;
+        height: 8px;
+        background: #e4e4e4;
+    }
+
+    .progress-bar {
+        height: 100%;
+        background: #4d6fb3;
+        width: calc(var(--pct) * 1%);
+        transition: width .25s;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+{% set current = 2 %}
+<div class="progress-wrapper">
+    <div class="progress-bar" style="--pct: {{ current * 20 }};"></div>
+</div>
+
+<div class="step-tag">Step 2 ) Build the Drink</div>
+
+<div class="instructions">
+    <h2>DRAG & DROP AN ITEM</h2>
+    <div class="warning">ADD INGREDIENTS IN ANY ORDER</div>
+    <ul>
+        <li>tequila</li>
+        <li>orange juice</li>
+        <li>grenadine</li>
+    </ul>
+</div>
+
+<div class="glass-area">
+    <img id="glass" class="glass"
+        src="https://images.unsplash.com/photo-1542736667-069246bdbc4d?auto=format&fit=crop&w=200&q=60"
+        alt="Highball glass" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+    <!-- draggable items -->
+    <div id="tequila" class="ingredient" style="top:20px;left:25%" draggable="true" ondragstart="drag(event)">
+        <img src="https://images.unsplash.com/photo-1564758866810-43c59605eb1d?auto=format&fit=crop&w=200&q=60"
+            alt="Tequila">
+    </div>
+    <div id="oj" class="ingredient" style="top:150px;left:70%" draggable="true" ondragstart="drag(event)">
+        <img src="https://images.unsplash.com/photo-1553531384-cc64ac1c0f8f?auto=format&fit=crop&w=200&q=60"
+            alt="Orange juice">
+    </div>
+    <div id="grenadine" class="ingredient" style="top:280px;left:25%" draggable="true" ondragstart="drag(event)">
+        <img src="https://images.unsplash.com/photo-1519014404880-41c7c259f069?auto=format&fit=crop&w=200&q=60"
+            alt="Grenadine">
+    </div>
+    <div id="wrong" class="ingredient" style="top:410px;left:70%" draggable="true" ondragstart="drag(event)">
+        <img src="https://images.unsplash.com/photo-1585145191800-35d69ddb5e8c?auto=format&fit=crop&w=200&q=60"
+            alt="Wrong ingredient">
+    </div>
+</div>
+
+<!-- Quiz modal -->
+<div id="quiz-modal" class="modal hidden">
+    <div class="modal-content">
+        <h3 id="quiz-question">Question</h3>
+        <form id="quiz-form"></form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    const modal = document.getElementById('quiz-modal');
+    const q = document.getElementById('quiz-question');
+    const form = document.getElementById('quiz-form');
+    let current = null, count = 0;
+
+    const choices = {
+        tequila: ['1 oz', '2 oz', '2.5 oz'],
+        oj: ['2 oz', '4 oz', '6 oz'],
+        grenadine: ['¼ oz', '½ oz', '1 oz']
+    };
+    const answers = { tequila: '2 oz', oj: '4 oz', grenadine: '½ oz' };
+
+    function allowDrop(e) { e.preventDefault(); }
+    function drag(e) { e.dataTransfer.setData('text', e.currentTarget.id); }
+    function drop(e) {
+        e.preventDefault();
+        const id = e.dataTransfer.getData('text');
+        if (id === 'wrong') { alert("Not part of this recipe!"); return; }
+        current = id;
+        const label = id === 'oj' ? 'orange juice' : id;
+        q.textContent = `How much ${label} did you add?`;
+        form.innerHTML = choices[id].map(c => `<label><input type="radio" name="amt" value="${c}" required> ${c}</label>`).join('') +
+            '<button type="submit">Submit</button>';
+        modal.classList.remove('hidden');
+    }
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        if (form.amt.value !== answers[current]) { alert('Try again!'); return; }
+        document.getElementById(current)?.remove();
+        modal.classList.add('hidden');
+        if (++count === 3) {
+            const btn = document.createElement('a');
+            btn.className = 'congrats-btn';
+            btn.href = "{{ url_for('tequila_sunrise_3') }}";
+            btn.textContent = '🎉  Great!  Next Step';
+            document.body.appendChild(btn);
+        }
+    });
+    modal.addEventListener('click', e => { if (e.target === modal) modal.classList.add('hidden'); });
+</script>
+{% endblock %}

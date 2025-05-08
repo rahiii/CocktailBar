@@ -1,68 +1,91 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tequila Sunrise Quiz</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}">
-</head>
-<body>
-    <h1>Tequila Sunrise Quiz</h1>
+{% extends 'navbar.html' %}
 
-    <form id="quizForm">
-        <div class="question">
-            <h3>1. What is the base spirit in a Tequila Sunrise?</h3>
-            <div class="choices">
-                <label><input type="radio" name="q1" value="a"> Vodka</label>
-                <label><input type="radio" name="q1" value="b"> Tequila</label>
-                <label><input type="radio" name="q1" value="c"> Gin</label>
-            </div>
-        </div>
+{% block title %}Tequila Sunrise Quiz | Cocktail Bar{% endblock %}
 
-        <div class="question">
-            <h3>2. Which fruit juice gives the drink its orange color?</h3>
-            <div class="choices">
-                <label><input type="radio" name="q2" value="a"> Pineapple juice</label>
-                <label><input type="radio" name="q2" value="b"> Orange juice</label>
-                <label><input type="radio" name="q2" value="c"> Mango juice</label>
-            </div>
-        </div>
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}">
+<style>
+    .score {
+        font-weight: 600;
+        margin-bottom: 1rem
+    }
 
-        <div class="question">
-            <h3>3. What ingredient creates the “sunrise” gradient effect?</h3>
-            <div class="choices">
-                <label><input type="radio" name="q3" value="a"> Grenadine</label>
-                <label><input type="radio" name="q3" value="b"> Bitters</label>
-                <label><input type="radio" name="q3" value="c"> Campari</label>
-            </div>
-        </div>
+    .wrong label {
+        color: #c60
+    }
 
-        <div class="question">
-            <h3>4. What is a typical garnish for a Tequila Sunrise?</h3>
-            <div class="choices">
-                <label><input type="radio" name="q4" value="a"> Mint sprig</label>
-                <label><input type="radio" name="q4" value="b"> Cherry and orange slice</label>
-                <label><input type="radio" name="q4" value="c"> Lime wheel</label>
-            </div>
-        </div>
+    .locked input {
+        pointer-events: none
+    }
+</style>
+{% endblock %}
 
-        <div class="question">
-            <h3>5. In which decade did the Tequila Sunrise become widely popular in the U.S.?</h3>
-            <div class="choices">
-                <label><input type="radio" name="q5" value="a"> 1960s</label>
-                <label><input type="radio" name="q5" value="b"> 1970s</label>
-                <label><input type="radio" name="q5" value="c"> 1980s</label>
-            </div>
-        </div>
+{% block content %}
+<h1>Tequila Sunrise Quiz</h1>
+<p id="scoreLine" class="score"></p>
 
-        <button type="submit" class="submit-btn">Submit</button>
-    </form>
+<form id="quizForm">
+    <div class="question">
+        <h3>1. What is the base spirit in a Tequila Sunrise?</h3>
+        <label><input type="radio" name="q1" value="a"> Vodka</label>
+        <label><input type="radio" name="q1" value="b"> Tequila</label>
+        <label><input type="radio" name="q1" value="c"> Gin</label>
+    </div>
 
-    <script>
-        document.getElementById('quizForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thanks for taking the quiz! Answers are not graded in this demo.');
+    <div class="question">
+        <h3>2. Which fruit juice gives the drink its orange color?</h3>
+        <label><input type="radio" name="q2" value="a"> Pineapple</label>
+        <label><input type="radio" name="q2" value="b"> Orange</label>
+        <label><input type="radio" name="q2" value="c"> Mango</label>
+    </div>
+
+    <div class="question">
+        <h3>3. What ingredient creates the “sunrise” gradient effect?</h3>
+        <label><input type="radio" name="q3" value="a"> Grenadine</label>
+        <label><input type="radio" name="q3" value="b"> Bitters</label>
+        <label><input type="radio" name="q3" value="c"> Campari</label>
+    </div>
+
+    <div class="question">
+        <h3>4. What is a typical garnish for a Tequila Sunrise?</h3>
+        <label><input type="radio" name="q4" value="a"> Mint sprig</label>
+        <label><input type="radio" name="q4" value="b"> Cherry & orange slice</label>
+        <label><input type="radio" name="q4" value="c"> Lime wheel</label>
+    </div>
+
+    <div class="question">
+        <h3>5. In which decade did the Tequila Sunrise become widely popular in the U.S.?</h3>
+        <label><input type="radio" name="q5" value="a"> 1960s</label>
+        <label><input type="radio" name="q5" value="b"> 1970s</label>
+        <label><input type="radio" name="q5" value="c"> 1980s</label>
+    </div>
+
+    <button type="submit" class="submit-btn">Submit</button>
+</form>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    const KEY = { q1: 'b', q2: 'b', q3: 'a', q4: 'b', q5: 'b' };
+    let tries = 0;
+    const form = document.getElementById('quizForm');
+    const scoreLine = document.getElementById('scoreLine');
+    update(0);
+
+    form.addEventListener('submit', e => {
+        e.preventDefault(); tries++;
+        let right = 0;
+        [...form.querySelectorAll('.question')].forEach(q => {
+            const n = q.querySelector('input').name;
+            const pick = q.querySelector('input:checked');
+            if (pick && pick.value === KEY[n]) { lock(q); right++; } else { wrong(q); }
         });
-    </script>
-</body>
-</html>
+        update(right);
+        if (right === Object.keys(KEY).length) alert('Perfect! 🎉');
+    });
+
+    function lock(q) { q.classList.add('locked'); q.querySelectorAll('label').forEach(l => l.style.fontWeight = '700'); }
+    function wrong(q) { q.classList.add('wrong'); }
+    function update(r) { scoreLine.textContent = `Score ${r}/5 — Attempt #${tries || 1}`; }
+</script>
+{% endblock %}

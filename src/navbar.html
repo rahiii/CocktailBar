@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>{% block title %}Cocktail Bar{% endblock %}</title>
+  <title>{% block title %}Cocktail Bar{% endblock %}</title>
 
   <!-- global styles -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
@@ -14,41 +15,19 @@
 </head>
 
 <body>
-  <!-- NAVBAR + QUIZ OVERLAY -->
+  <!-- NAVBAR -->
   <nav class="navbar">
     <a href="{{ url_for('home') }}" class="logo-container logo-link">
-      <div class="logo-text">COCKTAIL BAR</div>
-      <img src="{{ url_for('static', filename='images/Logo.png') }}"
-           alt="Logo" class="logo-img">
+      <div class="logo-text">COCKTAIL BAR</div>
+      <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="Logo" class="logo-img">
     </a>
     <ul class="nav-links">
-      <li><a href="#">Recipe Book</a></li>
-      <li><a href="#">Tool Book</a></li>
-      <li><a href="#" onclick="openSidebar()">Quiz</a></li>
+      <li><a href="{{ url_for('recipe_book') }}">Recipe Book</a></li>
+      <li><a href="{{ url_for('quiz_menu') }}">Quiz</a></li>
     </ul>
   </nav>
 
-  <div id="sidebarOverlay" class="overlay" onclick="closeSidebar()">
-    <div id="quizSidebar" class="sidebar" onclick="event.stopPropagation()">
-      <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">×</a>
-      <div class="quiz-content">
-        <a href="{{ url_for('bloody_orange_martini_quiz') }}" class="drink">
-          <img src="{{ url_for('static', filename='images/bloodyorangemartini.png') }}" alt="Bloody Orange Martini">
-          <p>Bloody Orange Martini</p>
-        </a>
-        <a href="{{ url_for('tequila_sunrise_quiz') }}" class="drink">
-          <img src="{{ url_for('static', filename='images/tequilasunrise.png') }}" alt="Tequila Sunrise">
-          <p>Tequila Sunrise</p>
-        </a>
-        <a href="{{ url_for('grapefruit_paloma_quiz') }}" class="drink">
-          <img src="{{ url_for('static', filename='images/grapefruitpaloma.png') }}" alt="Grapefruit Paloma">
-          <p>Grapefruit Paloma</p>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- PAGE‐SPECIFIC CONTENT -->
+  <!-- PAGE‑SPECIFIC CONTENT -->
   <main>
     {% block content %}{% endblock %}
   </main>
@@ -60,4 +39,5 @@
 
   {% block extra_js %}{% endblock %}
 </body>
+
 </html>

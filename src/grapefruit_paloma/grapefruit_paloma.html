@@ -1,21 +1,147 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cocktail Bar</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-</head>
-<body>
-    <nav class="navbar">
-        <div class="logo-container">
-            <div class="logo-text">COCKTAIL BAR</div>
-            <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="Logo" class="logo-img">
+{% extends 'navbar.html' %}
+
+{% block title %}Step 1 – Collect Ingredients | Cocktail Bar{% endblock %}
+
+{% block extra_head %}
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0
+    }
+
+    body {
+        background: #fff8ea;
+        font-family: system-ui, Roboto, sans-serif;
+        color: #333
+    }
+
+    .cocktail-wrapper {
+        display: flex;
+        gap: 2.5rem;
+        padding: 2rem 1.5rem
+    }
+
+    .left-panel {
+        flex: 1 1 48ch;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem
+    }
+
+    .step-tag {
+        align-self: flex-start;
+        border: 2px solid #f4b400;
+        padding: .6rem 1.2rem;
+        background: #fff5cc;
+        border-radius: 6px;
+        font-weight: 700
+    }
+
+    .ingredients-card {
+        border: 2px solid #274c77;
+        border-radius: 8px;
+        background: #eef3f9;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, .05)
+    }
+
+    .ingredients-card h2 {
+        padding: 1rem 1.5rem;
+        background: #274c77;
+        color: #fff;
+        font-size: 1.8rem;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px
+    }
+
+    .ingredients-card ul {
+        list-style: disc;
+        padding: 1rem 2rem 1.5rem 2rem;
+        line-height: 1.8;
+        font-size: 1.1rem
+    }
+
+    .right-panel {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 2.5rem;
+        padding-right: 6rem
+    }
+
+    .drink-photo {
+        width: 100%;
+        max-width: 440px;
+        border-radius: 40px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, .1);
+        transition: .3s
+    }
+
+    .drink-photo:hover {
+        transform: scale(1.03);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, .18)
+    }
+
+    .next-btn {
+        background: linear-gradient(135deg, #4d6fb3, #3b5898);
+        color: #fff;
+        border: none;
+        padding: .9rem 2rem;
+        font-size: 1.2rem;
+        border-radius: 10px;
+        font-weight: bold;
+        text-decoration: none;
+        text-align: center
+    }
+
+    .next-btn:hover {
+        transform: translateY(-2px)
+    }
+
+    /* === progress bar === */
+    .progress-wrapper {
+        width: 100%;
+        height: 8px;
+        background: #e4e4e4;
+    }
+
+    .progress-bar {
+        height: 100%;
+        background: #4d6fb3;
+        width: calc(var(--pct) * 1%);
+        transition: width .25s;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+{% set current = 1 %}
+<div class="progress-wrapper">
+    <div class="progress-bar" style="--pct: {{ current * 20 }};"></div>
+</div>
+
+<main class="cocktail-wrapper">
+    <section class="left-panel">
+        <span class="step-tag">Step 1  Collect Ingredients</span>
+        <div class="ingredients-card">
+            <h2>Grapefruit Paloma Ingredients</h2>
+            <ul>
+                <li>2 oz blanco tequila</li>
+                <li>½ oz fresh lime juice</li>
+                <li>3 oz cold grapefruit soda</li>
+                <li>Ice</li>
+                <li>Optional: pinch of salt</li>
+                <li>Grapefruit or lime wedge</li>
+            </ul>
         </div>
-        <ul class="nav-links">
-            <li><a href="#">Recipe Book</a></li>
-            <li><a href="#">Tool Book</a></li>
-        </ul>
-    </nav>  
-</body>
-</html>
+    </section>
+
+    <section class="right-panel">
+        <img src="https://images.unsplash.com/photo-1571076872349-f98a03480b1b?auto=format&fit=crop&w=800&q=80"
+            alt="Grapefruit Paloma with lime and salt rim" class="drink-photo">
+        <a href="{{ url_for('grapefruit_paloma_2') }}" class="next-btn">NEXT STEP</a>
+    </section>
+</main>
+{% endblock %}

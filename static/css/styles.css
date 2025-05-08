@@ -4,9 +4,10 @@ body {
     margin: 0;
     padding: 0;
     font-family: Tahoma, sans-serif;
-    background-color: #fdf5e6; 
+    background-color: #fdf5e6;
     font-size: 20px;
 }
+
 /* ---------------------------------------------------------- */
 /* NAVBAR STYLING */
 .navbar {
@@ -14,7 +15,7 @@ body {
     justify-content: space-between;
     align-items: flex-end;
     padding: 1.5rem 2.5rem 1.0rem 2.5rem;
-    border-bottom: 1px solid #ccc; 
+    border-bottom: 1px solid #ccc;
 }
 
 .logo {
@@ -49,7 +50,7 @@ body {
 }
 
 .logo-img {
-    height: 40px; 
+    height: 40px;
     width: auto;
 }
 
@@ -64,10 +65,12 @@ body {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    text-decoration: none;  /* remove underline */
-    color: inherit;         /* keep the same color as .logo-text */
+    text-decoration: none;
+    /* remove underline */
+    color: inherit;
+    /* keep the same color as .logo-text */
     cursor: pointer;
-  }
+}
 
 /* ---------------------------------------------------------- */
 /* QUIZ SIDEBAR STYLING */
@@ -79,17 +82,17 @@ body {
     bottom: 0;
     width: 300px;
     background-color: #fdf5e6;
-    box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
     overflow-y: auto;
-    overflow-x: hidden;    
+    overflow-x: hidden;
     padding-top: 60px;
     z-index: 1000;
     transform: translateX(100%);
-  }
+}
 
-  .sidebar.active {
+.sidebar.active {
     transform: translateX(0);
-  }
+}
 
 
 .sidebar .closebtn {
@@ -147,4 +150,80 @@ body {
 
 body.no-scroll {
     overflow: hidden;
-  }
+}
+
+.progress-wrapper {
+    width: 100%;
+    height: 8px;
+    background: #e4e4e4;
+}
+
+.progress-bar {
+    height: 100%;
+    background: #4d6fb3;
+    /* width is  calc(var(--pct) * 1%)  where --pct is set in HTML */
+    width: calc(var(--pct) * 1%);
+    transition: width .25s;
+}
+
+/* =======================================================
+   CALL‑TO‑ACTION OVERLAYS (Next Step + Finished)
+======================================================= */
+.next-overlay,
+.done-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.next-box,
+.done-box {
+    background: #fff;
+    padding: 2rem 2.5rem;
+    border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .25);
+    text-align: center;
+    animation: pop .35s ease;
+}
+
+.next-box h3,
+.done-box h2 {
+    margin: 0 0 1rem;
+    font-family: system-ui, Roboto, sans-serif
+}
+
+.next-btn-big,
+.done-btn {
+    display: inline-block;
+    margin: .4rem .5rem;
+    padding: .7rem 1.6rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    background: #4d6fb3;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: transform .2s;
+}
+
+.next-btn-big:hover,
+.done-btn:hover {
+    transform: translateY(-2px)
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(.8);
+        opacity: 0
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1
+    }
+}

@@ -1,0 +1,231 @@
+{% extends 'navbar.html' %}
+
+{% block title %}Step 2 – Build the Drink | Cocktail Bar{% endblock %}
+
+{% block extra_head %}
+<style>
+    body {
+        background: #fff8ea;
+        font-family: system-ui, Roboto, sans-serif
+    }
+
+    .step-tag {
+        display: inline-block;
+        margin: 2rem 1.5rem 1.5rem;
+        padding: .5rem 1rem;
+        font-weight: bold;
+        border: 2px solid #f3ca41;
+        background: #fffbe2
+    }
+
+    .instructions {
+        float: left;
+        width: 320px;
+        margin-left: 1.5rem;
+        padding: 1.5rem;
+        border: 2px solid #4d6fb3;
+        background: #d4e1fa;
+        font-size: 1.05rem
+    }
+
+    .instructions h2 {
+        margin-bottom: .5rem;
+        font-size: 1.15rem;
+        text-align: center
+    }
+
+    .warning {
+        margin-bottom: 1rem;
+        color: red;
+        font-weight: 700;
+        text-align: center
+    }
+
+    .shaker-area {
+        position: relative;
+        margin-left: 360px;
+        min-height: 600px
+    }
+
+    .shaker {
+        display: block;
+        width: 140px;
+        margin: 100px auto 0
+    }
+
+    .ingredient {
+        position: absolute;
+        width: 80px;
+        cursor: grab
+    }
+
+    .ingredient img {
+        width: 100%;
+        display: block
+    }
+
+    .congrats-btn {
+        display: block;
+        margin: 1rem auto;
+        padding: .75rem 1.2rem;
+        background: #d4f8d4;
+        color: #2a7f2a;
+        border: 2px solid #2a7f2a;
+        border-radius: 4px;
+        text-align: center;
+        font-weight: bold;
+        max-width: 320px
+    }
+
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, .5);
+        display: flex;
+        align-items: center;
+        justify-content: center
+    }
+
+    .modal.hidden {
+        display: none
+    }
+
+    .modal-content {
+        background: #fff;
+        padding: 1.5rem;
+        border-radius: 6px;
+        width: 90%;
+        max-width: 320px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, .2)
+    }
+
+    .modal-content form {
+        margin-top: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: .5rem
+    }
+
+    .modal-content button {
+        margin-top: 1rem;
+        padding: .5rem;
+        font-size: 1rem;
+        border: 2px solid #4d6fb3;
+        background: #4d6fb3;
+        color: #fff;
+        border-radius: 4px
+    }
+
+    /* === progress bar === */
+    .progress-wrapper {
+        width: 100%;
+        height: 8px;
+        background: #e4e4e4;
+    }
+
+    .progress-bar {
+        height: 100%;
+        background: #4d6fb3;
+        width: calc(var(--pct) * 1%);
+        transition: width .25s;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+{% set current = 2 %}
+<div class="progress-wrapper">
+    <div class="progress-bar" style="--pct: {{ current * 20 }};"></div>
+</div>
+
+<div class="step-tag">Step 2 ) Prepare the Drink</div>
+
+<div class="instructions">
+    <h2>DRAG & DROP AN ITEM</h2>
+    <div class="warning">ADD INGREDIENTS IN ANY ORDER</div>
+    <ul>
+        <li>the tequila</li>
+        <li>lime juice</li>
+        <li>grapefruit soda</li>
+    </ul>
+</div>
+
+<div class="shaker-area">
+    <img id="shaker" class="shaker"
+        src="https://shop.abarabove.com/cdn/shop/products/Boston_Shaker_-_W_UW_-_SS_-_White_Background_-_13_dc718e0f-8da0-40a8-a617-51f5b2a7d22c.jpg?v=1741635951"
+        alt="Cocktail Shaker" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+    <!-- draggable items -->
+    <div id="tequila" class="ingredient" style="top:20px;left:30%" draggable="true" ondragstart="drag(event)">
+        <img src="https://images.unsplash.com/photo-1589987600256-3e86b2e7b0d6?auto=format&fit=crop&w=200&q=60"
+            alt="Tequila">
+    </div>
+    <div id="lime" class="ingredient" style="top:150px;left:70%" draggable="true" ondragstart="drag(event)">
+        <img src="https://images.unsplash.com/photo-1603052875894-20dbd5e1e4fa?auto=format&fit=crop&w=200&q=60"
+            alt="Lime juice">
+    </div>
+    <div id="soda" class="ingredient" style="top:280px;left:30%" draggable="true" ondragstart="drag(event)">
+        <img src="https://images.unsplash.com/photo-1607082340340-89c3b1e912e0?auto=format&fit=crop&w=200&q=60"
+            alt="Grapefruit soda">
+    </div>
+    <div id="wrong" class="ingredient" style="top:410px;left:70%" draggable="true" ondragstart="drag(event)">
+        <img src="https://images.unsplash.com/photo-1543353071-10c8ba85a904?auto=format&fit=crop&w=200&q=60"
+            alt="Wrong ingredient">
+    </div>
+</div>
+
+<!-- Quiz modal -->
+<div id="quiz-modal" class="modal hidden">
+    <div class="modal-content">
+        <h3 id="quiz-question">Question</h3>
+        <form id="quiz-form"></form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    const modal = document.getElementById('quiz-modal');
+    const qEl = document.getElementById('quiz-question');
+    const form = document.getElementById('quiz-form');
+    let currentId = null, correctCount = 0;
+
+    const choices = {
+        tequila: ['1 oz', '2 oz', '2.5 oz'],
+        lime: ['0.25 oz', '0.5 oz', '1 oz'],
+        soda: ['2 oz', '3 oz', '4 oz']
+    };
+    const answers = { tequila: '2 oz', lime: '0.5 oz', soda: '3 oz' };
+
+    function allowDrop(e) { e.preventDefault(); }
+    function drag(e) { e.dataTransfer.setData('text', e.currentTarget.id); }
+    function drop(e) {
+        e.preventDefault();
+        const id = e.dataTransfer.getData('text');
+        if (id === 'wrong') { alert("Not part of this recipe!"); return; }
+        currentId = id;
+        qEl.textContent = `How much ${id === 'soda' ? 'grapefruit soda' : id} did you add?`;
+        form.innerHTML = choices[id].map(c => `<label><input type="radio" name="amt" value="${c}" required> ${c}</label>`).join('') +
+            '<button type="submit">Submit</button>';
+        modal.classList.remove('hidden');
+    }
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        if (form.amt.value !== answers[currentId]) { alert('Try again!'); return; }
+        document.getElementById(currentId)?.remove();
+        modal.classList.add('hidden');
+        if (++correctCount === 3) {
+            const btn = document.createElement('a');
+            btn.className = 'congrats-btn';
+            btn.href = "{{ url_for('grapefruit_paloma_3') }}";
+            btn.textContent = '🎉  Great!  Next Step';
+            document.body.appendChild(btn);
+        }
+    });
+    modal.addEventListener('click', e => { if (e.target === modal) modal.classList.add('hidden'); });
+</script>
+{% endblock %}

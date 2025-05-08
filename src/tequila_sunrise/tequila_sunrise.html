@@ -1,21 +1,146 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cocktail Bar</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-</head>
-<body>
-    <nav class="navbar">
-        <div class="logo-container">
-            <div class="logo-text">COCKTAIL BAR</div>
-            <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="Logo" class="logo-img">
+{% extends 'navbar.html' %}
+
+{% block title %}Step 1 – Collect Ingredients | Cocktail Bar{% endblock %}
+
+{% block extra_head %}
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0
+    }
+
+    body {
+        background: #fff7f3;
+        font-family: system-ui, Roboto, sans-serif;
+        color: #333
+    }
+
+    .wrapper {
+        display: flex;
+        gap: 2.5rem;
+        padding: 2rem 1.5rem
+    }
+
+    .left {
+        flex: 1 1 48ch;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem
+    }
+
+    .step-tag {
+        align-self: flex-start;
+        border: 2px solid #f4a623;
+        padding: .6rem 1.2rem;
+        background: #fff1d6;
+        border-radius: 6px;
+        font-weight: 700
+    }
+
+    .card {
+        border: 2px solid #d64234;
+        border-radius: 8px;
+        background: #ffe9e4;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, .05)
+    }
+
+    .card h2 {
+        padding: 1rem 1.5rem;
+        background: #d64234;
+        color: #fff;
+        font-size: 1.8rem
+    }
+
+    .card ul {
+        list-style: disc;
+        padding: 1rem 2rem 1.5rem 2rem;
+        line-height: 1.8;
+        font-size: 1.1rem
+    }
+
+    .right {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 2.5rem;
+        padding-right: 6rem
+    }
+
+    .drink-photo {
+        width: 100%;
+        max-width: 440px;
+        border-radius: 40px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, .1);
+        transition: .3s
+    }
+
+    .drink-photo:hover {
+        transform: scale(1.03) translateY(-2px)
+    }
+
+    .next-btn {
+        background: linear-gradient(135deg, #d64234, #b83124);
+        color: #fff;
+        border: none;
+        padding: .9rem 2rem;
+        font-size: 1.2rem;
+        border-radius: 10px;
+        font-weight: bold;
+        text-decoration: none;
+        text-align: center
+    }
+
+    .next-btn:hover {
+        transform: translateY(-2px)
+    }
+
+    /* === progress bar === */
+    .progress-wrapper {
+        width: 100%;
+        height: 8px;
+        background: #e4e4e4;
+    }
+
+    .progress-bar {
+        height: 100%;
+        background: #4d6fb3;
+        width: calc(var(--pct) * 1%);
+        transition: width .25s;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+{% set current = 1 %}
+<div class="progress-wrapper">
+    <div class="progress-bar" style="--pct: {{ current * 20 }};"></div>
+</div>
+
+<main class="wrapper">
+    <section class="left">
+        <span class="step-tag">Step 1  Collect Ingredients</span>
+        <div class="card">
+            <h2>Tequila Sunrise Ingredients</h2>
+            <ul>
+                <li>2 oz blanco tequila</li>
+                <li>4 oz orange juice</li>
+                <li>½ oz grenadine</li>
+                <li>Ice</li>
+                <li>Optional: orange slice or cherry</li>
+            </ul>
         </div>
-        <ul class="nav-links">
-            <li><a href="#">Recipe Book</a></li>
-            <li><a href="#">Tool Book</a></li>
-        </ul>
-    </nav>  
-</body>
-</html>
+    </section>
+
+    <section class="right">
+        <img src="https://olmecaaltos.com/wp-content/uploads/2022/05/tequila-sunrise-with-orange.webp"
+            alt="Tequila Sunrise" class="drink-photo" style="max-width: 640px; width: 100%;">
+
+        <a href="{{ url_for('tequila_sunrise_2') }}" class="next-btn">NEXT STEP</a>
+    </section>
+
+
+</main>
+{% endblock %}

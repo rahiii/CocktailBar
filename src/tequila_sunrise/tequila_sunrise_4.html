@@ -1,0 +1,124 @@
+{% extends 'navbar.html' %}
+{% block title %}Step 4 – Add Grenadine | Cocktail Bar{% endblock %}
+
+{% block extra_head %}
+<style>
+    body {
+        background: #fff7f3;
+        font-family: system-ui, Roboto, sans-serif
+    }
+
+    .wrapper {
+        display: flex;
+        gap: 2.5rem;
+        padding: 2rem 1.5rem
+    }
+
+    .left {
+        flex: 1 1 48ch;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem
+    }
+
+    .step-tag {
+        border: 2px solid #f4a623;
+        padding: .6rem 1.2rem;
+        background: #fff1d6;
+        border-radius: 6px;
+        font-weight: 700
+    }
+
+    .card {
+        border: 2px solid #d64234;
+        border-radius: 8px;
+        background: #ffe9e4
+    }
+
+    .card h2 {
+        padding: 1rem 1.5rem;
+        background: #d64234;
+        color: #fff;
+        font-size: 1.6rem
+    }
+
+    .card ul {
+        list-style: disc;
+        padding: 1rem 2rem 1.5rem 2rem;
+        line-height: 1.8;
+        font-size: 1.05rem
+    }
+
+    .right {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 2.5rem;
+        padding-right: 6rem
+    }
+
+    .photo {
+        width: 100%;
+        max-width: 440px;
+        border-radius: 40px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, .1)
+    }
+
+    .next-btn {
+        background: linear-gradient(135deg, #d64234, #b83124);
+        color: #fff;
+        border: none;
+        padding: .9rem 2rem;
+        font-size: 1.2rem;
+        border-radius: 10px;
+        font-weight: bold;
+        text-decoration: none
+    }
+
+    .next-btn:hover {
+        transform: translateY(-2px)
+    }
+
+    /* === progress bar === */
+    .progress-wrapper {
+        width: 100%;
+        height: 8px;
+        background: #e4e4e4;
+    }
+
+    .progress-bar {
+        height: 100%;
+        background: #4d6fb3;
+        width: calc(var(--pct) * 1%);
+        transition: width .25s;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+{% set current = 4 %}
+<div class="progress-wrapper">
+    <div class="progress-bar" style="--pct: {{ current * 20 }};"></div>
+</div>
+
+<main class="wrapper">
+    <section class="left">
+        <span class="step-tag">Step 4 Add Grenadine</span>
+        <div class="card">
+            <h2>MAKE THE SUNRISE</h2>
+            <ul>
+                <li>Slowly drizzle grenadine down the inside of the glass</li>
+                <li>Let it sink to create the sunrise gradient</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="right">
+        <img src="https://images.unsplash.com/photo-1523987355523-c7b5b0172b26?auto=format&fit=crop&w=800&q=80"
+            alt="Grenadine sinking" class="photo">
+        <a href="{{ url_for('tequila_sunrise_5') }}" class="next-btn">NEXT STEP</a>
+    </section>
+</main>
+{% endblock %}
