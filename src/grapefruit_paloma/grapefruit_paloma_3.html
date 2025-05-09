@@ -122,7 +122,11 @@
   </div>
 
   <div class="right-panel">
-    <img src="https://media.giphy.com/media/3o6ZtV3pn0X8WX3G3S/giphy.gif" alt="Bartender shaking cocktail" class="shake-gif">
+    <img
+  src="{{ url_for('static', filename='images/Shake-Shake.webp') }}"
+  alt="Bartender shaking cocktail"
+  class="shake-gif"
+/>
     <a href="{{ url_for('grapefruit_paloma_4') }}" class="next-btn">Next Step</a>
   </div>
 </section>

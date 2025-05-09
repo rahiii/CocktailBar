@@ -125,8 +125,8 @@
   #bloodorange { top: 40px; left: 20px; }
   #vodka { top: 160px; right: 30px; }
   #triple { bottom: 160px; left: 20px; }
-  #lime { top: 300px; right: 40px; }
-  #syrup { bottom: 60px; right: 30px; }
+  #limejuice { top: 50px; right: 160px; }
+  #syrup { bottom: 60px; right: 130px; }
   #ice { bottom: 160px; right: 20px; }
   #wrong { top: 450px; left: 60px; }
 
@@ -168,12 +168,20 @@
 
 <section class="step-wrapper">
   <div class="left-panel">
-    <img id="shaker" class="shaker" src="https://shop.abarabove.com/cdn/shop/products/Boston_Shaker.jpg" alt="Cocktail Shaker"
-         ondrop="drop(event)" ondragover="allowDrop(event)">
-    {% for id, alt in [('bloodorange','Blood Orange Juice'), ('ice','Ice'), ('vodka','Vodka'), ('triple','Triple Sec'), ('lime','Lime Juice'), ('syrup','Simple Syrup'), ('wrong','Wrong Ingredient')] %}
+    <img
+  id="shaker"
+  class="shaker"
+  src="{{ url_for('static', filename='images/shaker.png') }}"
+  alt="Cocktail Shaker"
+  ondrop="drop(event)"
+  ondragover="allowDrop(event)"
+>
+    {% for id, alt in [('bloodorange','Blood Orange Juice'), ('ice','Ice'), ('vodka','Vodka'), ('triple','Triple Sec'), ('limejuice','Lime Juice'), ('syrup','Simple Syrup'), ('wrong','Wrong Ingredient')] %}
     <div id="{{ id }}" class="ingredient" draggable="true" ondragstart="drag(event)">
-      <img src="/static/images/{{ id }}.png" alt="{{ alt }}" />
+      <img src="{{ url_for('static', filename='images/' ~ id ~ '.png') }}"
+           alt="{{ alt }}" draggable="false" />
     </div>
+    
     {% endfor %}
   </div>
 
@@ -199,7 +207,7 @@
 <script>
   const nextBtn = document.getElementById('nextBtn');
   let correctCount = 0;
-  const required = ['bloodorange', 'vodka', 'triple', 'lime'];
+  const required = ['bloodorange', 'vodka', 'triple', 'limejuice', 'ice'];
 
   function allowDrop(ev) {
     ev.preventDefault();
@@ -224,21 +232,21 @@
       bloodorange: 'How much blood orange juice should you use?',
       vodka: 'How much vodka goes into the drink?',
       triple: 'How much triple sec is needed?',
-      lime: 'How much lime juice is needed?',
+      limejuice: 'How much lime juice is needed?',
       ice: 'How much ice is needed?'
     };
     const options = {
       bloodorange: ['0.5 oz', '1 oz', '1.5 oz', '2 oz'],
       vodka: ['1 oz', '1.5 oz', '2 oz', '2.5 oz'],
       triple: ['0.25 oz', '0.5 oz', '1 oz', '1.5 oz'],
-      lime: ['0.25 oz', '0.5 oz', '1 oz', '1.5 oz'],
+      limejuice: ['0.25 oz', '0.5 oz', '1 oz', '1.5 oz'],
       ice: ["as desired"]
     };
     const correct = {
       bloodorange: '1.5 oz',
       vodka: '2 oz',
       triple: '0.5 oz',
-      lime: '0.5 oz',
+      limejuice: '0.5 oz',
       ice: "as desired"
     };
 

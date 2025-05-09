@@ -58,7 +58,7 @@
   }
 
   .shaker {
-    width: 180px;
+    width: 280px;
     z-index: 1;
   }
 
@@ -165,12 +165,19 @@
 
 <section class="step-wrapper">
   <div class="left-panel" id="shakerContainer">
-    <img id="shaker" class="shaker" src="https://m.media-amazon.com/images/I/61pbcJ7bWGL.jpg" alt="Cocktail Shaker"
-         ondrop="drop(event)" ondragover="allowDrop(event)">
+    <img
+  id="shaker"
+  class="shaker"
+  src="{{ url_for('static', filename='images/martini.png') }}"
+  alt="Martini Glass"
+  ondrop="drop(event)"
+  ondragover="allowDrop(event)"
+>
     {% for id, alt in [('lime','Lime'), ('salt','Salt'), ('ice','Ice'), ('tequila','Tequila')] %}
-    <div id="{{ id }}" class="ingredient" draggable="true" ondragstart="drag(event)">
-      <img src="/static/images/{{ id }}.png" alt="{{ alt }}" />
+    <div id="{{id}}" class="ingredient" draggable="true" ondragstart="drag(event)">
+      <img src="/static/images/{{ id }}.png" alt="{{alt}}" draggable="false" />
     </div>
+    
     {% endfor %}
   </div>
 

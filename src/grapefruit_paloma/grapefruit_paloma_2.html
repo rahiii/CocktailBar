@@ -171,10 +171,14 @@
 
 <section class="step-wrapper">
   <div class="left-panel">
-    <img id="shaker" class="shaker"
-         src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Highball_Glass.jpg/800px-Highball_Glass.jpg"
-         alt="Highball Glass"
-         ondrop="drop(event)" ondragover="allowDrop(event)">
+    <img
+  id="shaker"
+  class="shaker"
+  src="{{ url_for('static', filename='images/shaker.png') }}"
+  alt="Cocktail Shaker"
+  ondrop="drop(event)"
+  ondragover="allowDrop(event)"
+>
 
     {% for id, alt in [
       ('grapefruit','Grapefruit Juice'),
@@ -185,8 +189,9 @@
       ('syrup','Simple Syrup'),
       ('wrong','Wrong Ingredient')
     ] %}
-      <div id="{{ id }}" class="ingredient" draggable="true" ondragstart="drag(event)">
-        <img src="/static/images/{{ id }}.png" alt="{{ alt }}" />
+    <div id="{{ id }}" class="ingredient" draggable="true" ondragstart="drag(event)">
+        <img src="{{ url_for('static', filename='images/' ~ id ~ '.png') }}"
+             alt="{{ alt }}" draggable="false" />
       </div>
     {% endfor %}
   </div>

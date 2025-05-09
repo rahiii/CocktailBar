@@ -58,7 +58,7 @@
   }
 
   .glass {
-    width: 180px;
+    width: 280px;
     z-index: 1;
     border-radius: 12px;
   }
@@ -166,10 +166,17 @@
 
 <section class="step-wrapper">
   <div class="left-panel" id="glassContainer">
-    <img id="glass" class="glass" src="https://images.unsplash.com/photo-1497534446932-c925b458314e?auto=format&fit=crop&w=350&q=60" alt="Sunrise glass" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <img
+  id="glass"
+  class="glass"
+  src="{{ url_for('static', filename='images/highball.png') }}"
+  alt="High Ball"
+  ondrop="drop(event)"
+  ondragover="allowDrop(event)"
+>
     {% for id, alt in [('orange','Orange Slice'), ('cherry','Cherry'), ('grenadine','Grenadine'), ('wrong','Wrong Ingredient')] %}
-    <div id="{{ id }}" class="ingredient" draggable="true" ondragstart="drag(event)">
-      <img src="/static/images/{{ id }}.png" alt="{{ alt }}" />
+    <div id="{{id}}" class="ingredient" draggable="true" ondragstart="drag(event)">
+      <img src="/static/images/{{ id }}.png" alt="{{alt}}" draggable="false" />
     </div>
     {% endfor %}
   </div>
@@ -231,44 +238,7 @@
       glass.remove();
       glassContainer.innerHTML = '<img src="/static/images/tequilasunrise.jpg" alt="Final Drink" style="max-width: 100%; border-radius: 12px;">';
       endButtons.style.display = 'flex';
-      launchConfetti();
     }
-  }
-
-  function launchConfetti() {
-    const duration = 3000;
-    const end = Date.now() + duration;
-
-    (function frame() {
-      createConfetti();
-      if (Date.now() < end) requestAnimationFrame(frame);
-    })();
-  }
-
-  function createConfetti() {
-    const colors = ['#f4b400', '#c0392b', '#e67e22'];
-    const confetti = document.createElement('div');
-    confetti.style.position = 'fixed';
-    confetti.style.width = '10px';
-    confetti.style.height = '10px';
-    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-    confetti.style.left = Math.random() * 100 + 'vw';
-    confetti.style.top = '-10px';
-    confetti.style.opacity = 0.7;
-    confetti.style.borderRadius = '50%';
-    confetti.style.zIndex = 9999;
-    document.body.appendChild(confetti);
-
-    const fall = () => {
-      let top = parseFloat(confetti.style.top);
-      if (top < window.innerHeight) {
-        confetti.style.top = top + 5 + 'px';
-        requestAnimationFrame(fall);
-      } else {
-        confetti.remove();
-      }
-    };
-    fall();
   }
 </script>
 {% endblock %}
