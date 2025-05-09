@@ -1,147 +1,144 @@
 {% extends 'navbar.html' %}
 
-{% block title %}Step 1 – Collect Ingredients | Cocktail Bar{% endblock %}
+{% block title %}Grapefruit Paloma – Cocktail Bar{% endblock %}
 
 {% block extra_head %}
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+
 <style>
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0
-    }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-    body {
-        background: #fff8ea;
-        font-family: system-ui, Roboto, sans-serif;
-        color: #333
-    }
+  body {
+    background: #fff8ea;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #333;
+  }
 
-    .cocktail-wrapper {
-        display: flex;
-        gap: 2.5rem;
-        padding: 2rem 1.5rem
-    }
+  .progress-wrapper {
+    width: 100%;
+    height: 8px;
+    background: #f4d1d8;
+  }
 
-    .left-panel {
-        flex: 1 1 48ch;
-        display: flex;
-        flex-direction: column;
-        gap: 2rem
-    }
+  .progress-bar {
+    height: 100%;
+    background: #e75480;
+    width: calc(var(--pct) * 1%);
+    transition: width .25s;
+  }
 
-    .step-tag {
-        align-self: flex-start;
-        border: 2px solid #f4b400;
-        padding: .6rem 1.2rem;
-        background: #fff5cc;
-        border-radius: 6px;
-        font-weight: 700
-    }
+  .cocktail-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 1.5rem;
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
 
-    .ingredients-card {
-        border: 2px solid #274c77;
-        border-radius: 8px;
-        background: #eef3f9;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, .05)
-    }
+  .step-tag {
+    font-weight: bold;
+    border: 2px solid #ff85a2;
+    padding: 0.6rem 1.2rem;
+    background: #ffe6ec;
+    color: #b03355;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+  }
 
-    .ingredients-card h2 {
-        padding: 1rem 1.5rem;
-        background: #274c77;
-        color: #fff;
-        font-size: 1.8rem;
-        border-top-left-radius: 6px;
-        border-top-right-radius: 6px
-    }
+  .info {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+  }
 
-    .ingredients-card ul {
-        list-style: disc;
-        padding: 1rem 2rem 1.5rem 2rem;
-        line-height: 1.8;
-        font-size: 1.1rem
-    }
+  .ingredients-card {
+    border: 2px solid #d94c78;
+    border-radius: 8px;
+    background: #eef3f9;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    padding-bottom: 1rem;
+  }
 
-    .right-panel {
-        flex: 1 1 auto;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 2.5rem;
-        padding-right: 6rem
-    }
+  .ingredients-card h2 {
+    padding: 1rem 1.5rem;
+    background: #d94c78;
+    color: #fff;
+    font-size: 1.8rem;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    font-family: 'Quicksand', sans-serif;
+    margin-bottom: 0.5rem;
+  }
 
-    .drink-photo {
-        width: 100%;
-        max-width: 440px;
-        border-radius: 40px;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, .1);
-        transition: .3s
-    }
+  .ingredients-card ul {
+    list-style: disc;
+    padding: 1rem 2rem;
+    text-align: left;
+    line-height: 1.8;
+    font-size: 1.15rem;
+    color: #2a2a2a;
+    font-family: 'Quicksand', sans-serif;
+  }
 
-    .drink-photo:hover {
-        transform: scale(1.03);
-        box-shadow: 0 12px 28px rgba(0, 0, 0, .18)
-    }
+  .ingredients-card li {
+    margin-bottom: 0.5rem;
+  }
 
-    .next-btn {
-        background: linear-gradient(135deg, #4d6fb3, #3b5898);
-        color: #fff;
-        border: none;
-        padding: .9rem 2rem;
-        font-size: 1.2rem;
-        border-radius: 10px;
-        font-weight: bold;
-        text-decoration: none;
-        text-align: center
-    }
+  .next-btn {
+    margin-top: 2rem;
+    background: linear-gradient(135deg, #e75480, #c0395f);
+    color: #fff;
+    border: none;
+    padding: 0.9rem 2rem;
+    font-size: 1.3rem;
+    border-radius: 10px;
+    font-weight: bold;
+    letter-spacing: 0.8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
 
-    .next-btn:hover {
-        transform: translateY(-2px)
-    }
-
-    /* === progress bar === */
-    .progress-wrapper {
-        width: 100%;
-        height: 8px;
-        background: #e4e4e4;
-    }
-
-    .progress-bar {
-        height: 100%;
-        background: #4d6fb3;
-        width: calc(var(--pct) * 1%);
-        transition: width .25s;
-    }
+  .next-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #c0395f, #a02e4b);
+  }
 </style>
 {% endblock %}
 
 {% block content %}
-
 {% set current = 1 %}
+
 <div class="progress-wrapper">
-    <div class="progress-bar" style="--pct: {{ current * 20 }};"></div>
+  <div class="progress-bar" style="--pct: {{ current * 20 }};"></div>
 </div>
 
 <main class="cocktail-wrapper">
-    <section class="left-panel">
-        <span class="step-tag">Step 1  Collect Ingredients</span>
-        <div class="ingredients-card">
-            <h2>Grapefruit Paloma Ingredients</h2>
-            <ul>
-                <li>2 oz blanco tequila</li>
-                <li>½ oz fresh lime juice</li>
-                <li>3 oz cold grapefruit soda</li>
-                <li>Ice</li>
-                <li>Optional: pinch of salt</li>
-                <li>Grapefruit or lime wedge</li>
-            </ul>
-        </div>
-    </section>
+  <span class="step-tag">Step 1: Collect Ingredients</span>
+  <p class="info">Total Time: 5 minutes &nbsp; • &nbsp; Yield: 1 drink</p>
 
-    <section class="right-panel">
-        <img src="https://images.unsplash.com/photo-1571076872349-f98a03480b1b?auto=format&fit=crop&w=800&q=80"
-            alt="Grapefruit Paloma with lime and salt rim" class="drink-photo">
-        <a href="{{ url_for('grapefruit_paloma_2') }}" class="next-btn">NEXT STEP</a>
-    </section>
+  <div class="ingredients-card">
+    <h2>Grapefruit Paloma Ingredients</h2>
+    <ul>
+      <li>2 oz blanco tequila</li>
+      <li>2 oz fresh grapefruit juice</li>
+      <li>2 oz sparkling water</li>
+      <li>0.5 oz fresh lime juice</li>
+      <li>0.25 oz simple syrup (or to taste)</li>
+      <li>Salt (for rim)</li>
+      <li>Ice</li>
+      <li>Grapefruit or lime wedge (garnish)</li>
+    </ul>
+  </div>
+
+  <a href="{{ url_for('grapefruit_paloma_2') }}" class="next-btn">Next Step</a>
 </main>
 {% endblock %}

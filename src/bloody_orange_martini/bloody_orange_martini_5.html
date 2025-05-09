@@ -1,212 +1,274 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'navbar.html' %}
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cocktail Bar</title>
+{% block title %}Step 5: Make the Glass | Cocktail Bar{% endblock %}
 
-  <!-- External Styles -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}" />
+{% block extra_head %}
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body {
+    background: #fff8ea;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #333;
+  }
 
-  <!-- Inline Styles -->
-  <style>
-    body {
-      background: #fff8ea;
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
+  .progress-wrapper {
+    width: 100%;
+    height: 8px;
+    background: #e4e4e4;
+  }
 
-    .step-tag {
-      display: inline-block;
-      margin: 2rem 1.5rem 1.5rem;
-      padding: 0.5rem 1rem;
-      font-weight: bold;
-      border: 2px solid #f3ca41;
-      background: #fffbe2;
-    }
+  .progress-bar {
+    height: 100%;
+    background: #4d6fb3;
+    width: calc(var(--pct) * 1%);
+    transition: width .25s;
+  }
 
-    .instructions {
-      float: left;
-      width: 320px;
-      margin-left: 1.5rem;
-      padding: 1.5rem;
-      border: 2px solid #4d6fb3;
-      background: #d4e1fa;
-      font-size: 1.1rem;
-    }
+  .step-tag {
+    font-weight: bold;
+    border: 2px solid #f4b400;
+    padding: 0.6rem 1.2rem;
+    background: #fff5cc;
+    color: #8a6d00;
+    border-radius: 6px;
+    margin: 1rem auto 1rem;
+    display: block;
+    text-align: center;
+    max-width: fit-content;
+  }
 
-    .instructions h2 {
-      margin-bottom: 0.5rem;
-      font-size: 1.2rem;
-      text-align: center;
-      color: #444;
-    }
+  .step-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 3rem;
+    padding: 2rem 1.5rem;
+  }
 
-    .warning {
-      margin-bottom: 1rem;
-      color: red;
-      font-weight: bold;
-      text-align: center;
-    }
+  .left-panel {
+    position: relative;
+    width: 550px;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  }
 
-    .shaker-area {
-      position: relative;
-      margin-left: 360px;
-      min-height: 600px;
-    }
+  .shaker {
+    width: 180px;
+    z-index: 1;
+  }
 
-    .shaker {
-      display: block;
-      width: 140px;
-      margin: 100px auto 0;
-    }
+  .ingredient {
+    position: absolute;
+    width: 90px;
+    cursor: grab;
+    transition: transform 0.2s;
+  }
 
-    .ingredient {
-      position: absolute;
-      width: 80px;
-      cursor: grab;
-    }
+  .ingredient img {
+    width: 100%;
+    border-radius: 10px;
+  }
 
-    .ingredient img {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
+  #lime { top: 40px; left: 20px; }
+  #salt { top: 160px; right: 30px; }
+  #ice { bottom: 160px; left: 20px; }
+  #tequila { bottom: 60px; right: 30px; }
 
-    .congrats-btn {
-      display: block;
-      margin: 1rem auto;
-      padding: 0.75rem 1.2rem;
-      background: #d4f8d4;
-      color: #2a7f2a;
-      border: 2px solid #2a7f2a;
-      border-radius: 4px;
-      text-align: center;
-      text-decoration: none;
-      font-weight: bold;
-      max-width: 320px;
-      cursor: pointer;
-    }
+  .right-panel {
+    max-width: 400px;
+    background: #f2f5fd;
+    border: 2px solid #4d6fb3;
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    text-align: center;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+    display: inline-block;
+    align-self: flex-start;
+  }
 
-    .congrats-btn:hover {
-      background: #b3eab3;
-    }
+  .right-panel h2 {
+    font-size: 1.4rem;
+    margin-bottom: 0.75rem;
+    color: #2a2a2a;
+  }
 
-    /* === progress bar === */
-    .progress-wrapper {
-      width: 100%;
-      height: 8px;
-      background: #e4e4e4;
-    }
+  .warning {
+    font-weight: bold;
+    color: #b30000;
+    margin-bottom: 1rem;
+  }
 
-    .progress-bar {
-      height: 100%;
-      background: #4d6fb3;
-      width: calc(var(--pct) * 1%);
-      /* --pct is a number (20–100) */
-      transition: width .25s;
-    }
-  </style>
+  .right-panel ul {
+    text-align: left;
+    padding-left: 1.25rem;
+    margin-top: 1rem;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
 
+  .right-panel li {
+    position: relative;
+    padding-left: 1.2em;
+  }
 
-</head>
+  .right-panel li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #333;
+  }
 
-<body>
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="logo-container">
-      <div class="logo-text">COCKTAIL BAR</div>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Cocktail_icon.png" alt="Logo" class="logo-img"
-        style="width:28px; height:28px;">
+  .action-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+  }
+
+  .finish-btn, .quiz-btn {
+    padding: 0.6rem 1.5rem;
+    background: #4d6fb3;
+    color: white;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 1rem;
+    border: 2px solid #4d6fb3;
+    transition: background 0.3s ease;
+  }
+
+  .finish-btn:hover, .quiz-btn:hover {
+    background: #3b5898;
+    border-color: #3b5898;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+{% set current = 5 %}
+<div class="progress-wrapper">
+  <div class="progress-bar" style="--pct: {{ current * 20 }};"></div>
+</div>
+<div style="padding: 1rem 2rem;">
+  <a href="{{ url_for('bloody_orange_martini_4') }}" style="text-decoration: none; color: #4d6fb3; font-weight: bold; font-size: 1rem;">← Back to Step 4</a>
+</div>
+
+<span class="step-tag">Step 5: Prepare the Glass</span>
+
+<section class="step-wrapper">
+  <div class="left-panel" id="shakerContainer">
+    <img id="shaker" class="shaker" src="https://m.media-amazon.com/images/I/61pbcJ7bWGL.jpg" alt="Cocktail Shaker"
+         ondrop="drop(event)" ondragover="allowDrop(event)">
+    {% for id, alt in [('lime','Lime'), ('salt','Salt'), ('ice','Ice'), ('tequila','Tequila')] %}
+    <div id="{{ id }}" class="ingredient" draggable="true" ondragstart="drag(event)">
+      <img src="/static/images/{{ id }}.png" alt="{{ alt }}" />
     </div>
-    <ul class="nav-links">
-      <li><a href="#">Quiz</a></li>
-    </ul>
-  </nav>
-
-
-  </nav>
-
-  {# ---------- progress bar (step 5 = 100 %) ---------- #}
-  {% set current = 5 %}
-  <div class="progress-wrapper">
-    <div class="progress-bar" style="--pct: {{ current * 20 }};"></div>
+    {% endfor %}
   </div>
 
-
-  <!-- Step Indicator -->
-  <div class="step-tag">Step 5) Make the glass</div>
-
-  <!-- Instructions -->
-  <div class="instructions">
+  <div class="right-panel">
     <h2>DRAG AND DROP AN ITEM</h2>
     <div class="warning">BE CAREFUL NOT TO MESS UP THE DRINK!</div>
     <ul>
-      <li>The Lime</li>
-      <li>The Ice</li>
-      <li>The Salt</li>
+      <li>Lime wedge</li>
+      <li>Ice cubes</li>
+      <li>Salt (for the rim)</li>
     </ul>
-  </div>
-
-  <!-- Shaker + Ingredients -->
-  <div class="shaker-area">
-    <img id="shaker" class="shaker" src="https://m.media-amazon.com/images/I/61pbcJ7bWGL.jpg" alt="Cocktail Shaker"
-      ondrop="drop(event)" ondragover="allowDrop(event)" />
-
-    <div id="tequila" class="ingredient" style="top:20px; left:30%;" draggable="true" ondragstart="drag(event)">
-      <img
-        src="https://www.usatoday.com/gcdn/media/2021/02/07/USATODAY/usatsports/imageForEntry88-kxI.jpg?crop=1365,768,x0,y0&width=1365&height=768&format=pjpg&auto=webps"
-        alt="Tequila" />
-    </div>
-    <div id="lime" class="ingredient" style="top:140px; left:70%;" draggable="true" ondragstart="drag(event)">
-      <img src="https://orchardfruit.com/cdn/shop/files/Lime-Pc-The-Orchard-Fruit-72137290.jpg?v=1722937824&width=1000"
-        alt="Lime Juice" />
-    </div>
-    <div id="triple" class="ingredient" style="top:260px; left:30%;" draggable="true" ondragstart="drag(event)">
-      <img
-        src="data:image/jpeg;base64,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"
-        alt="Triple Sec" />
+    <div id="feedback" style="margin-top: 1rem; font-weight: bold;"></div>
+    <div class="action-buttons" id="endButtons" style="display: none;">
+      <a href="{{ url_for('home') }}" class="finish-btn">Finish</a>
+      <a href="{{ url_for('bloody_orange_martini_quiz') }}" class="quiz-btn">Take the Quiz</a>
     </div>
   </div>
+</section>
+{% endblock %}
 
-  <!-- Script -->
-  <script>
-    function allowDrop(ev) {
-      ev.preventDefault();
+{% block extra_js %}
+<script>
+  const feedback = document.getElementById('feedback');
+  const shaker = document.getElementById('shaker');
+  const shakerContainer = document.getElementById('shakerContainer');
+  const endButtons = document.getElementById('endButtons');
+
+  let correctCount = 0;
+  const required = ['lime', 'ice', 'salt'];
+
+  function allowDrop(ev) {
+    ev.preventDefault();
+  }
+
+  function drag(ev) {
+    ev.dataTransfer.setData('text', ev.target.id);
+  }
+
+  function drop(ev) {
+    ev.preventDefault();
+    const id = ev.dataTransfer.getData('text');
+
+    if (!required.includes(id)) {
+      feedback.textContent = 'Not correct. Try again!';
+      feedback.style.color = 'red';
+      return;
     }
 
-    function drag(ev) {
-      ev.dataTransfer.setData('text', ev.currentTarget.id);
-    }
+    const el = document.getElementById(id);
+    if (el) el.remove();
 
-    function drop(ev) {
-      ev.preventDefault();
-      const id = ev.dataTransfer.getData('text');
-      if (id === 'wrong') {
-        alert("Oops! That's not an ingredient for this drink!");
-        return;
+    feedback.textContent = 'Correct!';
+    feedback.style.color = 'green';
+    correctCount++;
+
+    if (correctCount === required.length) {
+      feedback.textContent = 'All ingredients added!';
+      shaker.remove();
+      shakerContainer.innerHTML = '<img src="/static/images/bloodyorangemartini.jpg" alt="Final Drink" style="max-width: 100%; border-radius: 12px;">';
+      endButtons.style.display = 'flex';
+      confetti();
+    }
+  }
+
+  function confetti() {
+    const duration = 3000;
+    const end = Date.now() + duration;
+
+    (function frame() {
+      confettiEffect();
+      if (Date.now() < end) requestAnimationFrame(frame);
+    })();
+  }
+
+  function confettiEffect() {
+    const colors = ['#f4b400', '#4d6fb3', '#ff7043'];
+    const confetti = document.createElement('div');
+    confetti.style.position = 'fixed';
+    confetti.style.width = '10px';
+    confetti.style.height = '10px';
+    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.left = Math.random() * 100 + 'vw';
+    confetti.style.top = '-10px';
+    confetti.style.opacity = 0.7;
+    confetti.style.borderRadius = '50%';
+    confetti.style.zIndex = 9999;
+    document.body.appendChild(confetti);
+
+    const fall = () => {
+      let top = parseFloat(confetti.style.top);
+      if (top < window.innerHeight) {
+        confetti.style.top = top + 5 + 'px';
+        requestAnimationFrame(fall);
+      } else {
+        confetti.remove();
       }
-
-      const el = document.getElementById(id);
-      if (el) el.remove();
-
-      const remaining = document.querySelectorAll('.ingredient');
-      const correctIngredients = ['tequila', 'lime', 'triple'];
-
-      // Check if only the wrong ingredient remains
-      const allDropped = correctIngredients.every(name => !document.getElementById(name));
-      if (allDropped) {
-        const nextUrl = "{{ url_for('home') }}";
-        const btn = document.createElement('a');
-        btn.className = 'congrats-btn';
-        btn.href = nextUrl;
-        btn.textContent = '🎉 Congratulations! Click to move to the next step.';
-        document.body.appendChild(btn);
-      }
-    }
-  </script>
-</body>
-
-</html>
+    };
+    fall();
+  }
+</script>
+{% endblock %}

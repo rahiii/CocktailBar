@@ -1,146 +1,142 @@
 {% extends 'navbar.html' %}
 
-{% block title %}Step 1 – Collect Ingredients | Cocktail Bar{% endblock %}
+{% block title %}Tequila Sunrise – Cocktail Bar{% endblock %}
 
 {% block extra_head %}
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+
 <style>
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0
-    }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-    body {
-        background: #fff7f3;
-        font-family: system-ui, Roboto, sans-serif;
-        color: #333
-    }
+  body {
+    background: #fff8ea;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #333;
+  }
 
-    .wrapper {
-        display: flex;
-        gap: 2.5rem;
-        padding: 2rem 1.5rem
-    }
+  .progress-wrapper {
+    width: 100%;
+    height: 8px;
+    background: #e4e4e4;
+  }
 
-    .left {
-        flex: 1 1 48ch;
-        display: flex;
-        flex-direction: column;
-        gap: 2rem
-    }
+  .progress-bar {
+    height: 100%;
+    background: #c62828;
+    width: calc(var(--pct) * 1%);
+    transition: width .25s;
+  }
 
-    .step-tag {
-        align-self: flex-start;
-        border: 2px solid #f4a623;
-        padding: .6rem 1.2rem;
-        background: #fff1d6;
-        border-radius: 6px;
-        font-weight: 700
-    }
+  .cocktail-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 1.5rem;
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
 
-    .card {
-        border: 2px solid #d64234;
-        border-radius: 8px;
-        background: #ffe9e4;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, .05)
-    }
+  .step-tag {
+    font-weight: bold;
+    border: 2px solid #f44336;
+    padding: 0.6rem 1.2rem;
+    background: #ffe5e5;
+    color: #b71c1c;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+  }
 
-    .card h2 {
-        padding: 1rem 1.5rem;
-        background: #d64234;
-        color: #fff;
-        font-size: 1.8rem
-    }
+  .info {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+  }
 
-    .card ul {
-        list-style: disc;
-        padding: 1rem 2rem 1.5rem 2rem;
-        line-height: 1.8;
-        font-size: 1.1rem
-    }
+  .ingredients-card {
+    border: 2px solid #b71c1c;
+    border-radius: 8px;
+    background: #fff0f0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    padding-bottom: 1rem;
+  }
 
-    .right {
-        flex: 1 1 auto;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 2.5rem;
-        padding-right: 6rem
-    }
+  .ingredients-card h2 {
+    padding: 1rem 1.5rem;
+    background: #b71c1c;
+    color: #fff;
+    font-size: 1.8rem;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    font-family: 'Quicksand', sans-serif;
+    margin-bottom: 0.5rem;
+  }
 
-    .drink-photo {
-        width: 100%;
-        max-width: 440px;
-        border-radius: 40px;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, .1);
-        transition: .3s
-    }
+  .ingredients-card ul {
+    list-style: disc;
+    padding: 1rem 2rem;
+    text-align: left;
+    line-height: 1.8;
+    font-size: 1.15rem;
+    color: #2a2a2a;
+    font-family: 'Quicksand', sans-serif;
+  }
 
-    .drink-photo:hover {
-        transform: scale(1.03) translateY(-2px)
-    }
+  .ingredients-card li {
+    margin-bottom: 0.5rem;
+  }
 
-    .next-btn {
-        background: linear-gradient(135deg, #d64234, #b83124);
-        color: #fff;
-        border: none;
-        padding: .9rem 2rem;
-        font-size: 1.2rem;
-        border-radius: 10px;
-        font-weight: bold;
-        text-decoration: none;
-        text-align: center
-    }
+  .next-btn {
+    margin-top: 2rem;
+    background: linear-gradient(135deg, #e53935, #b71c1c);
+    color: #fff;
+    border: none;
+    padding: 0.9rem 2rem;
+    font-size: 1.3rem;
+    border-radius: 10px;
+    font-weight: bold;
+    letter-spacing: 0.8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
 
-    .next-btn:hover {
-        transform: translateY(-2px)
-    }
-
-    /* === progress bar === */
-    .progress-wrapper {
-        width: 100%;
-        height: 8px;
-        background: #e4e4e4;
-    }
-
-    .progress-bar {
-        height: 100%;
-        background: #4d6fb3;
-        width: calc(var(--pct) * 1%);
-        transition: width .25s;
-    }
+  .next-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #b71c1c, #8e0000);
+  }
 </style>
 {% endblock %}
 
 {% block content %}
-
 {% set current = 1 %}
+
 <div class="progress-wrapper">
-    <div class="progress-bar" style="--pct: {{ current * 20 }};"></div>
+  <div class="progress-bar" style="--pct: {{ current * 20 }};"></div>
 </div>
 
-<main class="wrapper">
-    <section class="left">
-        <span class="step-tag">Step 1  Collect Ingredients</span>
-        <div class="card">
-            <h2>Tequila Sunrise Ingredients</h2>
-            <ul>
-                <li>2 oz blanco tequila</li>
-                <li>4 oz orange juice</li>
-                <li>½ oz grenadine</li>
-                <li>Ice</li>
-                <li>Optional: orange slice or cherry</li>
-            </ul>
-        </div>
-    </section>
+<main class="cocktail-wrapper">
+  <span class="step-tag">Step 1: Collect Ingredients</span>
+  <p class="info">Total Time: 5 minutes &nbsp; • &nbsp; Yield: 1 drink</p>
 
-    <section class="right">
-        <img src="https://olmecaaltos.com/wp-content/uploads/2022/05/tequila-sunrise-with-orange.webp"
-            alt="Tequila Sunrise" class="drink-photo" style="max-width: 640px; width: 100%;">
+  <div class="ingredients-card">
+    <h2>Tequila Sunrise Ingredients</h2>
+    <ul>
+      <li>2 oz blanco tequila</li>
+      <li>4 oz freshly squeezed orange juice</li>
+      <li>0.25 oz grenadine</li>
+      <li>Orange slice (garnish)</li>
+      <li>Cherry (garnish)</li>
+      <li>Ice</li>
+    </ul>
+  </div>
 
-        <a href="{{ url_for('tequila_sunrise_2') }}" class="next-btn">NEXT STEP</a>
-    </section>
-
-
+  <a href="{{ url_for('tequila_sunrise_2') }}" class="next-btn">Next Step</a>
 </main>
 {% endblock %}

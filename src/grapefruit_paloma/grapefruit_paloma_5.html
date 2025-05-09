@@ -1,146 +1,274 @@
 {% extends 'navbar.html' %}
 
-{% block title %}Step 5 – Serve | Cocktail Bar{% endblock %}
+{% block title %}Step 5: Make the Glass | Cocktail Bar{% endblock %}
 
 {% block extra_head %}
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 <style>
-    body {
-        background: #fff8ea;
-        font-family: system-ui, Roboto, sans-serif
-    }
+  body {
+    background: #fff8ea;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #333;
+  }
 
-    .step-tag {
-        display: inline-block;
-        margin: 2rem 1.5rem 1.5rem;
-        padding: .5rem 1rem;
-        font-weight: bold;
-        border: 2px solid #f3ca41;
-        background: #fffbe2
-    }
+  .progress-wrapper {
+    width: 100%;
+    height: 8px;
+    background: #f4d1d8;
+  }
 
-    .instructions {
-        float: left;
-        width: 320px;
-        margin-left: 1.5rem;
-        padding: 1.5rem;
-        border: 2px solid #4d6fb3;
-        background: #d4e1fa;
-        font-size: 1.05rem
-    }
+  .progress-bar {
+    height: 100%;
+    background: #e75480;
+    width: calc(var(--pct) * 1%);
+    transition: width .25s;
+  }
 
-    .instructions h2 {
-        margin-bottom: .5rem;
-        text-align: center
-    }
+  .step-tag {
+    font-weight: bold;
+    border: 2px solid #ff85a2;
+    padding: 0.6rem 1.2rem;
+    background: #ffe6ec;
+    color: #b03355;
+    border-radius: 6px;
+    margin: 1rem auto 1rem;
+    display: block;
+    text-align: center;
+    max-width: fit-content;
+  }
 
-    .shaker-area {
-        position: relative;
-        margin-left: 360px;
-        min-height: 560px
-    }
+  .step-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 3rem;
+    padding: 2rem 1.5rem;
+  }
 
-    .glass {
-        display: block;
-        width: 180px;
-        margin: 80px auto 0
-    }
+  .left-panel {
+    position: relative;
+    width: 550px;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  }
 
-    .ingredient {
-        position: absolute;
-        width: 80px;
-        cursor: grab
-    }
+  .shaker {
+    width: 180px;
+    z-index: 1;
+  }
 
-    .ingredient img {
-        width: 100%;
-        display: block
-    }
+  .ingredient {
+    position: absolute;
+    width: 90px;
+    cursor: grab;
+    transition: transform 0.2s;
+  }
 
-    .congrats-btn {
-        display: block;
-        margin: 1rem auto;
-        padding: .75rem 1.2rem;
-        background: #d4f8d4;
-        color: #2a7f2a;
-        border: 2px solid #2a7f2a;
-        border-radius: 4px;
-        text-align: center;
-        font-weight: bold;
-        max-width: 320px
-    }
+  .ingredient img {
+    width: 100%;
+    border-radius: 10px;
+  }
 
-    /* === progress bar === */
-    .progress-wrapper {
-        width: 100%;
-        height: 8px;
-        background: #e4e4e4;
-    }
+  #lime { top: 40px; left: 20px; }
+  #salt { top: 160px; right: 30px; }
+  #ice { bottom: 160px; left: 20px; }
+  #tequila { bottom: 60px; right: 30px; }
 
-    .progress-bar {
-        height: 100%;
-        background: #4d6fb3;
-        width: calc(var(--pct) * 1%);
-        transition: width .25s;
-    }
+  .right-panel {
+    max-width: 400px;
+    background: #fef0f4;
+    border: 2px solid #e75480;
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    text-align: center;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+    display: inline-block;
+    align-self: flex-start;
+  }
+
+  .right-panel h2 {
+    font-size: 1.4rem;
+    margin-bottom: 0.75rem;
+    color: #2a2a2a;
+  }
+
+  .warning {
+    font-weight: bold;
+    color: #b30000;
+    margin-bottom: 1rem;
+  }
+
+  .right-panel ul {
+    text-align: left;
+    padding-left: 1.25rem;
+    margin-top: 1rem;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .right-panel li {
+    position: relative;
+    padding-left: 1.2em;
+  }
+
+  .right-panel li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #333;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+  }
+
+  .finish-btn, .quiz-btn {
+    padding: 0.6rem 1.5rem;
+    background: #e75480;
+    color: white;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 1rem;
+    border: 2px solid #e75480;
+    transition: background 0.3s ease;
+  }
+
+  .finish-btn:hover, .quiz-btn:hover {
+    background: #cc3d6c;
+    border-color: #cc3d6c;
+  }
 </style>
 {% endblock %}
 
 {% block content %}
-
 {% set current = 5 %}
 <div class="progress-wrapper">
-    <div class="progress-bar" style="--pct: {{ current * 20 }};"></div>
+  <div class="progress-bar" style="--pct: {{ current * 20 }};"></div>
+</div>
+<div style="padding: 1rem 2rem;">
+  <a href="{{ url_for('grapefruit_paloma_4') }}" style="text-decoration: none; color: #e75480; font-weight: bold; font-size: 1rem;">← Back to Step 4</a>
 </div>
 
+<span class="step-tag">Step 5: Prepare the Glass</span>
 
-<div class="step-tag">Step 5 ) Serve & Enjoy!</div>
+<section class="step-wrapper">
+  <div class="left-panel" id="shakerContainer">
+    <img id="shaker" class="shaker" src="https://m.media-amazon.com/images/I/61pbcJ7bWGL.jpg" alt="Cocktail Shaker"
+         ondrop="drop(event)" ondragover="allowDrop(event)">
+    {% for id, alt in [('lime','Lime'), ('salt','Salt'), ('ice','Ice'), ('tequila','Tequila')] %}
+    <div id="{{ id }}" class="ingredient" draggable="true" ondragstart="drag(event)">
+      <img src="/static/images/{{ id }}.png" alt="{{ alt }}" />
+    </div>
+    {% endfor %}
+  </div>
 
-<div class="instructions">
-    <h2>ADD YOUR GARNISH</h2>
-    <div class="warning" style="margin-bottom:1rem;color:red;font-weight:700;text-align:center">DON'T DROP THE WRONG
-        ITEM!</div>
+  <div class="right-panel">
+    <h2>DRAG AND DROP AN ITEM</h2>
+    <div class="warning">DON'T MESS UP THE GARNISH!</div>
     <ul>
-        <li>Salt pinch</li>
-        <li>Citrus wedge</li>
+      <li>Lime wedge</li>
+      <li>Ice cubes</li>
+      <li>Salt rim</li>
     </ul>
-</div>
-
-<div class="shaker-area">
-    <img id="glass" class="glass"
-        src="https://images.unsplash.com/photo-1551024709-8f23befc6e10?auto=format&fit=crop&w=350&q=60"
-        alt="Highball glass" ondrop="drop(event)" ondragover="allowDrop(event)">
-
-    <div id="salt" class="ingredient" style="top:20px;left:30%" draggable="true" ondragstart="drag(event)">
-        <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?auto=format&fit=crop&w=200&q=60"
-            alt="Salt">
+    <div id="feedback" style="margin-top: 1rem; font-weight: bold;"></div>
+    <div class="action-buttons" id="endButtons" style="display: none;">
+      <a href="{{ url_for('home') }}" class="finish-btn">Finish</a>
+      <a href="{{ url_for('grapefruit_paloma_quiz') }}" class="quiz-btn">Take the Quiz</a>
     </div>
-    <div id="wedge" class="ingredient" style="top:150px;left:70%" draggable="true" ondragstart="drag(event)">
-        <img src="https://images.unsplash.com/photo-1510627498534-cf7e9002facc?auto=format&fit=crop&w=200&q=60"
-            alt="Citrus wedge">
-    </div>
-    <div id="wrong" class="ingredient" style="top:280px;left:30%" draggable="true" ondragstart="drag(event)">
-        <img src="https://images.unsplash.com/photo-1507748863335-1e1f9b6a8b09?auto=format&fit=crop&w=200&q=60"
-            alt="Wrong item">
-    </div>
-</div>
+  </div>
+</section>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-    function allowDrop(e) { e.preventDefault(); }
-    function drag(e) { e.dataTransfer.setData('text', e.currentTarget.id); }
-    function drop(e) {
-        e.preventDefault();
-        const id = e.dataTransfer.getData('text');
-        if (id === 'wrong') { alert("Oops – not a garnish!"); return; }
-        document.getElementById(id)?.remove();
-        if (!document.getElementById('salt') && !document.getElementById('wedge')) {
-            const btn = document.createElement('a');
-            btn.className = 'congrats-btn';
-            btn.href = "{{ url_for('home') }}";
-            btn.textContent = '🎉 Paloma ready! Return Home';
-            document.body.appendChild(btn);
-        }
+  const feedback = document.getElementById('feedback');
+  const shaker = document.getElementById('shaker');
+  const shakerContainer = document.getElementById('shakerContainer');
+  const endButtons = document.getElementById('endButtons');
+
+  let correctCount = 0;
+  const required = ['lime', 'ice', 'salt'];
+
+  function allowDrop(ev) {
+    ev.preventDefault();
+  }
+
+  function drag(ev) {
+    ev.dataTransfer.setData('text', ev.target.id);
+  }
+
+  function drop(ev) {
+    ev.preventDefault();
+    const id = ev.dataTransfer.getData('text');
+
+    if (!required.includes(id)) {
+      feedback.textContent = 'Not correct. Try again!';
+      feedback.style.color = 'red';
+      return;
     }
+
+    const el = document.getElementById(id);
+    if (el) el.remove();
+
+    feedback.textContent = 'Correct!';
+    feedback.style.color = 'green';
+    correctCount++;
+
+    if (correctCount === required.length) {
+      feedback.textContent = 'All items added!';
+      shaker.remove();
+      shakerContainer.innerHTML = '<img src="/static/images/grapefruitpaloma.jpg" alt="Final Drink" style="max-width: 100%; border-radius: 12px;">';
+      endButtons.style.display = 'flex';
+      confetti();
+    }
+  }
+
+  function confetti() {
+    const duration = 3000;
+    const end = Date.now() + duration;
+
+    (function frame() {
+      confettiEffect();
+      if (Date.now() < end) requestAnimationFrame(frame);
+    })();
+  }
+
+  function confettiEffect() {
+    const colors = ['#ff85a2', '#e75480', '#f4d1d8'];
+    const confetti = document.createElement('div');
+    confetti.style.position = 'fixed';
+    confetti.style.width = '10px';
+    confetti.style.height = '10px';
+    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.left = Math.random() * 100 + 'vw';
+    confetti.style.top = '-10px';
+    confetti.style.opacity = 0.7;
+    confetti.style.borderRadius = '50%';
+    confetti.style.zIndex = 9999;
+    document.body.appendChild(confetti);
+
+    const fall = () => {
+      let top = parseFloat(confetti.style.top);
+      if (top < window.innerHeight) {
+        confetti.style.top = top + 5 + 'px';
+        requestAnimationFrame(fall);
+      } else {
+        confetti.remove();
+      }
+    };
+    fall();
+  }
 </script>
 {% endblock %}

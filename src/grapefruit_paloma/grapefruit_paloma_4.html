@@ -1,127 +1,142 @@
 {% extends 'navbar.html' %}
 
-{% block title %}Step 4 – Top & Garnish | Cocktail Bar{% endblock %}
+{% block title %}Step 4: Prepare the Glass | Cocktail Bar{% endblock %}
 
 {% block extra_head %}
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+
 <style>
-    body {
-        background: #fff8ea;
-        font-family: system-ui, Roboto, sans-serif
-    }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-    .cocktail-wrapper {
-        display: flex;
-        gap: 2.5rem;
-        padding: 2rem 1.5rem
-    }
+  body {
+    background: #fff8ea;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #333;
+  }
 
-    .left-panel {
-        flex: 1 1 48ch;
-        display: flex;
-        flex-direction: column;
-        gap: 2rem
-    }
+  .progress-wrapper {
+    width: 100%;
+    height: 8px;
+    background: #f4d1d8;
+  }
 
-    .step-tag {
-        border: 2px solid #f4b400;
-        padding: .6rem 1.2rem;
-        background: #fff5cc;
-        border-radius: 6px;
-        font-weight: 700
-    }
+  .progress-bar {
+    height: 100%;
+    background: #e75480;
+    width: calc(var(--pct) * 1%);
+    transition: width .25s;
+  }
 
-    .ingredients-card {
-        border: 2px solid #274c77;
-        border-radius: 8px;
-        background: #eef3f9
-    }
+  .cocktail-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 1.5rem;
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
 
-    .ingredients-card h2 {
-        padding: 1rem 1.5rem;
-        background: #274c77;
-        color: #fff;
-        font-size: 1.6rem
-    }
+  .step-tag {
+    font-weight: bold;
+    border: 2px solid #ff85a2;
+    padding: 0.6rem 1.2rem;
+    background: #ffe6ec;
+    color: #b03355;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+  }
 
-    .ingredients-card ul {
-        list-style: disc;
-        padding: 1rem 2rem 1.5rem 2rem;
-        line-height: 1.8;
-        font-size: 1.05rem
-    }
+  .info {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+  }
 
-    .right-panel {
-        flex: 1 1 auto;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 2.5rem;
-        padding-right: 6rem
-    }
+  .ingredients-card {
+    border: 2px solid #e75480;
+    border-radius: 8px;
+    background: #fef0f4;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    padding-bottom: 1rem;
+  }
 
-    .drink-photo {
-        width: 100%;
-        max-width: 440px;
-        border-radius: 40px;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, .1)
-    }
+  .ingredients-card h2 {
+    padding: 1rem 1.5rem;
+    background: #e75480;
+    color: #fff;
+    font-size: 1.8rem;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    font-family: 'Quicksand', sans-serif;
+    margin-bottom: 0.5rem;
+  }
 
-    .next-btn {
-        background: linear-gradient(135deg, #4d6fb3, #3b5898);
-        color: #fff;
-        border: none;
-        padding: .9rem 2rem;
-        font-size: 1.2rem;
-        border-radius: 10px;
-        font-weight: bold;
-        text-decoration: none
-    }
+  .ingredients-card ul {
+    list-style: disc;
+    padding: 1rem 2rem;
+    text-align: left;
+    line-height: 1.8;
+    font-size: 1.15rem;
+    color: #2a2a2a;
+    font-family: 'Quicksand', sans-serif;
+  }
 
-    .next-btn:hover {
-        transform: translateY(-2px)
-    }
+  .ingredients-card li {
+    margin-bottom: 0.5rem;
+  }
 
-    /* === progress bar === */
-    .progress-wrapper {
-        width: 100%;
-        height: 8px;
-        background: #e4e4e4;
-    }
+  .next-btn {
+    margin-top: 2rem;
+    background: linear-gradient(135deg, #e75480, #cc3d6c);
+    color: #fff;
+    border: none;
+    padding: 0.9rem 2rem;
+    font-size: 1.3rem;
+    border-radius: 10px;
+    font-weight: bold;
+    letter-spacing: 0.8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
 
-    .progress-bar {
-        height: 100%;
-        background: #4d6fb3;
-        width: calc(var(--pct) * 1%);
-        transition: width .25s;
-    }
+  .next-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #cc3d6c, #b03355);
+  }
 </style>
 {% endblock %}
 
 {% block content %}
-
 {% set current = 4 %}
+
 <div class="progress-wrapper">
-    <div class="progress-bar" style="--pct: {{ current * 20 }};"></div>
+  <div class="progress-bar" style="--pct: {{ current * 20 }};"></div>
+</div>
+<div style="padding: 1rem 2rem;">
+  <a href="{{ url_for('grapefruit_paloma_3') }}" style="text-decoration: none; color: #e75480; font-weight: bold; font-size: 1rem;">← Back to Step 3</a>
 </div>
 
 <main class="cocktail-wrapper">
-    <section class="left-panel">
-        <span class="step-tag">Step 4 Top & Garnish</span>
-        <div class="ingredients-card">
-            <h2>FINISHING TOUCHES</h2>
-            <ul>
-                <li>Strain into an ice‑filled highball glass</li>
-                <li>Top with grapefruit soda</li>
-                <li>Pinch of salt on top</li>
-                <li>Add grapefruit or lime wedge</li>
-            </ul>
-        </div>
-    </section>
+  <span class="step-tag">Step 4: Prepare the Glass</span>
+  <p class="info">Get your glass ready to serve the Paloma!</p>
 
-    <section class="right-panel">
-        <img src="https://images.unsplash.com/photo-1592841162780-37fafb80f07d?auto=format&fit=crop&w=800&q=80"
-            alt="Paloma being topped with soda" class="drink-photo">
-        <a href="{{ url_for('grapefruit_paloma_5') }}" class="next-btn">NEXT STEP</a>
-    </section>
+  <div class="ingredients-card">
+    <h2>Garnish & Glass Prep</h2>
+    <ul>
+      <li>Salt (for the rim)</li>
+      <li>Lime wedge</li>
+      <li>Ice</li>
+    </ul>
+  </div>
+
+  <a href="{{ url_for('grapefruit_paloma_5') }}" class="next-btn">Next Step</a>
 </main>
 {% endblock %}

@@ -1,91 +1,227 @@
 {% extends 'navbar.html' %}
 
-{% block title %}Grapefruit Paloma Quiz | Cocktail Bar{% endblock %}
+{% block title %}Grapefruit Paloma Quiz | Cocktail Bar{% endblock %}
 
 {% block extra_head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 <style>
-    .score {
-        font-weight: 600;
-        margin-bottom: 1rem
-    }
+  body {
+    background: #fff8ea;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #333;
+  }
 
-    .wrong label {
-        color: #c60
-    }
+  h1 {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 2rem;
+    color: #e75480;
+  }
 
-    .locked input {
-        pointer-events: none
-    }
+  .score {
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .correct-msg {
+    text-align: center;
+    color: #2a7f2a;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+
+  .question {
+    background: #fff0f4;
+    border: 2px solid #e75480;
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    margin: 1rem auto;
+    max-width: 600px;
+    font-size: 1.1rem;
+  }
+
+  .question h3 {
+    margin-bottom: 0.5rem;
+  }
+
+  .question label {
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  .submit-btn {
+    display: block;
+    margin: 2rem auto;
+    padding: 0.6rem 1.5rem;
+    background: #e75480;
+    color: white;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 1rem;
+    border: 2px solid #e75480;
+    transition: background 0.3s ease;
+    cursor: pointer;
+  }
+
+  .submit-btn:hover {
+    background: #cc3d6c;
+    border-color: #cc3d6c;
+  }
+
+  .wrong label {
+    color: #c60 !important;
+  }
+
+  .locked input {
+    pointer-events: none;
+  }
+
+  .feedback {
+    font-weight: 600;
+    color: #b30000;
+    margin-top: 0.5rem;
+  }
+
+  .final-feedback {
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #2a7f2a;
+    background: #d4f8d4;
+    padding: 1rem;
+    margin: 2rem auto;
+    max-width: 700px;
+    border-radius: 12px;
+    border: 2px solid #2a7f2a;
+  }
 </style>
 {% endblock %}
 
 {% block content %}
-<h1>Grapefruit Paloma Quiz</h1>
+<h1>Grapefruit Paloma Quiz</h1>
 <p id="scoreLine" class="score"></p>
-
+<p id="correctMsg" class="correct-msg"></p>
 <form id="quizForm">
-    <div class="question">
-        <h3>1. What is the traditional base spirit in a Paloma?</h3>
-        <label><input type="radio" name="q1" value="a"> Tequila</label>
-        <label><input type="radio" name="q1" value="b"> Rum</label>
-        <label><input type="radio" name="q1" value="c"> Mezcal</label>
-    </div>
+  <div class="question">
+    <h3>1. What kind of tequila is typically used in a Paloma?</h3>
+    <label><input type="radio" name="q1" value="a"> Reposado</label>
+    <label><input type="radio" name="q1" value="b"> Añejo</label>
+    <label><input type="radio" name="q1" value="c"> Blanco</label>
+    <div class="feedback"></div>
+  </div>
 
-    <div class="question">
-        <h3>2. Which of these fruits is the star of a Paloma?</h3>
-        <label><input type="radio" name="q2" value="a"> Orange</label>
-        <label><input type="radio" name="q2" value="b"> Grapefruit</label>
-        <label><input type="radio" name="q2" value="c"> Lime</label>
-    </div>
+  <div class="question">
+    <h3>2. What gives the Paloma its tart citrus character?</h3>
+    <label><input type="radio" name="q2" value="a"> Lemon</label>
+    <label><input type="radio" name="q2" value="b"> Grapefruit</label>
+    <label><input type="radio" name="q2" value="c"> Orange</label>
+    <div class="feedback"></div>
+  </div>
 
-    <div class="question">
-        <h3>3. What is the most common mixer used in a Paloma?</h3>
-        <label><input type="radio" name="q3" value="a"> Club soda</label>
-        <label><input type="radio" name="q3" value="b"> Tonic water</label>
-        <label><input type="radio" name="q3" value="c"> Grapefruit soda</label>
-    </div>
+  <div class="question">
+    <h3>3. How much grapefruit juice is typically used? <small>(Choose the best answer)</small></h3>
+    <label><input type="radio" name="q3" value="a"> 1 oz</label>
+    <label><input type="radio" name="q3" value="b"> 2 oz</label>
+    <label><input type="radio" name="q3" value="c"> 3 oz</label>
+    <div class="feedback"></div>
+  </div>
 
-    <div class="question">
-        <h3>4. What type of rim is often used on a Paloma glass?</h3>
-        <label><input type="radio" name="q4" value="a"> Sugar</label>
-        <label><input type="radio" name="q4" value="b"> Chili powder</label>
-        <label><input type="radio" name="q4" value="c"> Salt</label>
-    </div>
+  <div class="question">
+    <h3>4. Enter the correct amount (in oz) for each ingredient below:</h3>
+    <label>Tequila: <input type="text" name="tequila"></label><br>
+    <label>Lime juice: <input type="text" name="lime"></label><br>
+    <label>Simple syrup: <input type="text" name="syrup"></label><br>
+    <div class="feedback"></div>
+  </div>
 
-    <div class="question">
-        <h3>5. What glass is typically used for serving a Paloma?</h3>
-        <label><input type="radio" name="q5" value="a"> Coupe</label>
-        <label><input type="radio" name="q5" value="b"> Highball</label>
-        <label><input type="radio" name="q5" value="c"> Martini</label>
-    </div>
-
-    <button type="submit" class="submit-btn">Submit</button>
+  <button type="submit" class="submit-btn">Submit</button>
 </form>
+<div id="finalFeedback"></div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-    const KEY = { q1: 'a', q2: 'b', q3: 'c', q4: 'c', q5: 'b' };
-    let tries = 0;
-    const form = document.getElementById('quizForm');
-    const scoreLine = document.getElementById('scoreLine');
-    update(0);
+  const KEY = { q1: 'c', q2: 'b', q3: 'b' };
+  const FEEDBACK = {
+    q1: 'Hint: Think fresh and unaged for a crisp citrus blend.',
+    q2: 'Hint: It’s the fruit in the drink’s name!',
+    q3: 'Hint: Enough to balance the tequila and soda but not overpower it.'
+  };
 
-    form.addEventListener('submit', e => {
-        e.preventDefault(); tries++;
-        let right = 0;
-        [...form.querySelectorAll('.question')].forEach(q => {
-            const n = q.querySelector('input').name;
-            const pick = q.querySelector('input:checked');
-            if (pick && pick.value === KEY[n]) { lock(q); right++; } else { wrong(q); }
-        });
-        update(right);
-        if (right === Object.keys(KEY).length) alert('Perfect! 🎉');
+  let tries = 0;
+  const form = document.getElementById('quizForm');
+  const scoreLine = document.getElementById('scoreLine');
+  const correctMsg = document.getElementById('correctMsg');
+  const finalFeedback = document.getElementById('finalFeedback');
+
+  updateScore(0);
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    tries++;
+    let right = 0;
+    finalFeedback.textContent = '';
+    finalFeedback.className = '';
+    correctMsg.textContent = '';
+
+    ['q1', 'q2', 'q3'].forEach(qName => {
+      const q = form.querySelector(`[name="${qName}"]`).closest('.question');
+      const chosen = q.querySelector('input:checked');
+      const fb = q.querySelector('.feedback');
+      if (!chosen || chosen.value !== KEY[qName]) {
+        markWrong(q);
+        fb.textContent = FEEDBACK[qName];
+      } else {
+        lockCorrect(q);
+        fb.textContent = '';
+        right++;
+      }
     });
 
-    function lock(q) { q.classList.add('locked'); q.querySelectorAll('label').forEach(l => l.style.fontWeight = '700'); }
-    function wrong(q) { q.classList.add('wrong'); }
-    function update(r) { scoreLine.textContent = `Score ${r}/5 — Attempt #${tries || 1}`; }
+    const inputQ = form.querySelector('input[name="tequila"]').closest('.question');
+    const fbInput = inputQ.querySelector('.feedback');
+    const expected = {
+      tequila: ['2'],
+      lime: ['0.5', '.5', '0.50'],
+      syrup: ['0.25', '.25', '0.25']
+    };
+    let count = 0;
+    Object.entries(expected).forEach(([key, val]) => {
+      const input = form.querySelector(`input[name="${key}"]`);
+      if (input && val.includes(input.value.trim())) count++;
+    });
+
+    if (count === Object.keys(expected).length) {
+      lockCorrect(inputQ);
+      fbInput.textContent = '';
+    } else {
+      markWrong(inputQ);
+      fbInput.textContent = `Hint: Look back at the ingredient list! You got ${count}/3 right.`;
+    }
+
+    right += count;
+    updateScore(right);
+
+    if (right === 6) {
+      correctMsg.textContent = '🎉 Nailed it! You’re officially a Paloma pro.';
+    }
+  });
+
+  function lockCorrect(q) {
+    q.classList.remove('wrong');
+    q.classList.add('locked');
+    q.querySelectorAll('label').forEach(l => l.style.fontWeight = '700');
+  }
+
+  function markWrong(q) {
+    q.classList.add('wrong');
+  }
+
+  function updateScore(r) {
+    scoreLine.textContent = `Score ${r}/6 — Attempt #${tries || 1}`;
+  }
 </script>
 {% endblock %}

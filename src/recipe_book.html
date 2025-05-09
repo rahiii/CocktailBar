@@ -1,112 +1,146 @@
 {% extends 'navbar.html' %}
 
-{% block title %}Recipe Book | Cocktail Bar{% endblock %}
+{% block title %}Recipe Book | Cocktail Bar{% endblock %}
 
 {% block extra_head %}
 <style>
-    body {
-        background: #faf7f4;
-        font-family: system-ui, Roboto, sans-serif
-    }
+  body {
+    background-color: #fdf5e6;
+    font-family: system-ui, Roboto, sans-serif;
+  }
 
-    .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 2.5rem;
-        padding: 3rem 5vw
-    }
+  .card-row {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1.5rem; /* less space between cards */
+    padding: 3rem 1rem;
+    flex-wrap: wrap;
+  }
 
-    .card {
-        background: #fff;
-        border: 2px solid #ddd;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, .06);
-        display: flex;
-        flex-direction: column
-    }
+  .drink-card {
+    background: rgba(255, 255, 255, 0.4); 
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    max-width: 400px; /* smaller card width */
+    padding: 1rem;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
 
-    .card img {
-        width: 100%;
-        height: 220px;
-        object-fit: cover;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px
-    }
+  .drink-card:hover {
+    transform: translateY(-5px);
+  }
 
-    .card h2 {
-        margin: 1rem 1.25rem 0;
-        font-size: 1.5rem;
-        color: #333
-    }
+  .drink-card img {
+    width: 100%;
+    height: 330px;
+    object-fit: cover; /* crops sides */
+    border-radius: 10px;
+  }
 
-    .card ul {
-        margin: 1rem 1.75rem 0 1.75rem;
-        line-height: 1.6;
-        font-size: 1rem;
-        list-style: disc
-    }
+  .drink-card h3 {
+    margin-top: 0.8rem;
+    font-size: 1.2rem;
+    color: #333;
+  }
 
-    .card a.btn {
-        display: inline-block;
-        margin: 1.5rem 1.75rem 2rem;
-        padding: .55rem 1.2rem;
-        background: #4d6fb3;
-        color: #fff;
-        border-radius: 6px;
-        text-decoration: none;
-        font-weight: 600
-    }
+  .ingredients {
+    background: #f7f2eb;
+    border-radius: 10px;
+    padding: 0.8rem 1.2rem;
+    margin: 0.8rem 0;
+    text-align: left;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
 
-    .card a.btn:hover {
-        background: #3b5898
-    }
+  .ingredients h4 {
+    margin: 0 0 0.5rem;
+    font-size: 1.05rem;
+    color: #444;
+    font-weight: bold;
+  }
+
+  .ingredients ul {
+    padding-left: 1.2rem;
+    margin: 0;
+  }
+
+  .start-btn {
+    display: inline-block;
+    margin-top: 0.4rem;
+    padding: 0.5rem 1.2rem;
+    background: #4d6fb3;
+    color: white;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+    font-size: 0.95rem;
+  }
+
+  .start-btn:hover {
+    background: #3b5898;
+  }
 </style>
 {% endblock %}
 
 {% block content %}
-<section class="grid">
+<div class="card-row">
 
-    <!-- Bloody Orange Martini -->
-    <div class="card">
-        <img src="{{ url_for('static', filename='images/bloodyorangemartini.png') }}" alt="Bloody Orange Martini">
-        <h2>Bloody Orange Martini</h2>
-        <ul>
-            <li>2 oz tequila (100 % agave)</li>
-            <li>1 oz lime juice</li>
-            <li>1 oz triple sec</li>
-            <li>Salt &amp; lime wedge</li>
-            <li>Ice</li>
-        </ul>
-        <a href="{{ url_for('bloody_orange_martini') }}" class="btn">Start Tutorial</a>
+  <div class="drink-card">
+    <img src="{{ url_for('static', filename='images/bloodyorangemartini.jpg') }}" alt="Bloody Orange Martini">
+    <h3>Bloody Orange Martini</h3>
+    <div class="ingredients">
+      <h4>Ingredients</h4>
+      <ul>
+        <li>1.5 oz fresh blood orange juice</li>
+        <li>2 oz vodka</li>
+        <li>½ oz triple sec</li>
+        <li>½ oz lime juice</li>
+        <li>0.33 oz simple syrup</li>
+        <li>blood orange (garnish)</li>
+        <li>ice</li>
+      </ul>
     </div>
+    <a href="{{ url_for('bloody_orange_martini') }}" class="start-btn">Start Tutorial</a>
+  </div>
 
-    <!-- Tequila Sunrise -->
-    <div class="card">
-        <img src="{{ url_for('static', filename='images/tequilasunrise.png') }}" alt="Tequila Sunrise">
-        <h2>Tequila Sunrise</h2>
-        <ul>
-            <li>2 oz blanco tequila</li>
-            <li>4 oz orange juice</li>
-            <li>½ oz grenadine</li>
-            <li>Ice</li>
-            <li>Orange slice or cherry (garnish)</li>
-        </ul>
-        <a href="{{ url_for('tequila_sunrise') }}" class="btn">Start Tutorial</a>
+  <div class="drink-card">
+    <img src="{{ url_for('static', filename='images/tequilasunrise.jpg') }}" alt="Tequila Sunrise">
+    <h3>Tequila Sunrise</h3>
+    <div class="ingredients">
+      <h4>Ingredients</h4>
+      <ul>
+        <li>2 oz blanco tequila</li>
+        <li>4 oz orange juice</li>
+        <li>¼ oz grenadine</li>
+        <li>orange slice  (garnish)</li>
+        <li>cherry (garnish)</li>
+        <li>ice</li>
+      </ul>
     </div>
+    <a href="{{ url_for('tequila_sunrise') }}" class="start-btn">Start Tutorial</a>
+  </div>
 
-    <!-- Grapefruit Paloma -->
-    <div class="card">
-        <img src="{{ url_for('static', filename='images/grapefruitpaloma.png') }}" alt="Grapefruit Paloma">
-        <h2>Grapefruit Paloma</h2>
-        <ul>
-            <li>2 oz blanco tequila</li>
-            <li>½ oz fresh lime juice</li>
-            <li>3 oz grapefruit soda</li>
-            <li>Ice</li>
-            <li>Pinch of salt &amp; citrus wedge</li>
-        </ul>
-        <a href="{{ url_for('grapefruit_paloma') }}" class="btn">Start Tutorial</a>
+  <div class="drink-card">
+    <img src="{{ url_for('static', filename='images/grapefruitpaloma.jpg') }}" alt="Grapefruit Paloma">
+    <h3>Grapefruit Paloma</h3>
+    <div class="ingredients">
+      <h4>Ingredients</h4>
+      <ul>
+        <li>2 oz tequila</li>
+        <li>2 oz sparkling water</li>
+        <li>2 oz fresh grapefruit juice</li>
+        <li>½ oz fresh lime juice</li>
+        <li>¼ oz agave nectar or simple syrup</li>
+        <li>pinch of salt & citrus wedge (garnish)</li>
+        <li>ice</li>
+      </ul>
     </div>
+    <a href="{{ url_for('grapefruit_paloma') }}" class="start-btn">Start Tutorial</a>
+  </div>
 
-</section>
+</div>
 {% endblock %}

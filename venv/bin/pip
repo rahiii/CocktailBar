@@ -1,5 +1,5 @@
 #!/bin/sh
-'''exec' "/Users/zaryaabkhan/Documents/UI FINAL PROJECT/CocktailBar/venv/bin/python3" "$0" "$@"
+'''exec' "/Users/rahimitra/Downloads/Semesters/Spring 2025/UI Design/Final Project/venv/bin/python3.13" "$0" "$@"
 ' '''
 # -*- coding: utf-8 -*-
 import re

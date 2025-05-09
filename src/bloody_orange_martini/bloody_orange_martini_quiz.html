@@ -1,106 +1,228 @@
 {% extends 'navbar.html' %}
 
-{% block title %}Bloody Orange Martini Quiz | Cocktail Bar{% endblock %}
+{% block title %}Bloody Orange Martini Quiz | Cocktail Bar{% endblock %}
 
 {% block extra_head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 <style>
-    .score {
-        font-weight: 600;
-        margin-bottom: 1rem
-    }
+  body {
+    background: #fff8ea;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #333;
+    margin: 0;
+  }
 
-    .wrong label {
-        color: #c60 !important
-    }
+  h1 {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 2rem;
+    color: #4d6fb3;
+  }
 
-    .locked input {
-        pointer-events: none
-    }
+  .score {
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .correct-msg {
+    text-align: center;
+    color: #2a7f2a;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+
+  .question {
+    background: #f2f5fd;
+    border: 2px solid #4d6fb3;
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    margin: 1rem auto;
+    max-width: 600px;
+    font-size: 1.1rem;
+  }
+
+  .question h3 {
+    margin-bottom: 0.5rem;
+  }
+
+  .question label {
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  .submit-btn {
+    display: block;
+    margin: 2rem auto;
+    padding: 0.6rem 1.5rem;
+    background: #4d6fb3;
+    color: white;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 1rem;
+    border: 2px solid #4d6fb3;
+    transition: background 0.3s ease;
+    cursor: pointer;
+  }
+
+  .submit-btn:hover {
+    background: #3b5898;
+    border-color: #3b5898;
+  }
+
+  .wrong label {
+    color: #c60 !important;
+  }
+
+  .locked input {
+    pointer-events: none;
+  }
+
+  .feedback {
+    font-weight: 600;
+    color: #b30000;
+    margin-top: 0.5rem;
+  }
+
+  .final-feedback {
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #2a7f2a;
+    background: #d4f8d4;
+    padding: 1rem;
+    margin: 2rem auto;
+    max-width: 700px;
+    border-radius: 12px;
+    border: 2px solid #2a7f2a;
+  }
 </style>
 {% endblock %}
 
 {% block content %}
-
-
-
-<h1>Bloody Orange Martini Quiz</h1>
-
+<h1>Bloody Orange Martini Quiz</h1>
 <p id="scoreLine" class="score"></p>
-
+<p id="correctMsg" class="correct-msg"></p>
 <form id="quizForm">
-
     <div class="question">
-        <h3>1. What is the base spirit in a Bloody Orange Martini?</h3>
-        <label><input type="radio" name="q1" value="a"> Vodka</label>
-        <label><input type="radio" name="q1" value="b"> Rum</label>
-        <label><input type="radio" name="q1" value="c"> Gin</label>
+        <h3>1. What is the base spirit in a Blood Orange Martini?</h3>
+        <label><input type="radio" name="q1" value="a"> Vodka</label>
+        <label><input type="radio" name="q1" value="b"> Rum</label>
+        <label><input type="radio" name="q1" value="c"> Gin</label>
+        <div class="feedback"></div>
     </div>
 
     <div class="question">
-        <h3>2. What citrus fruit gives the drink its name?</h3>
-        <label><input type="radio" name="q2" value="a"> Blood Orange</label>
-        <label><input type="radio" name="q2" value="b"> Grapefruit</label>
-        <label><input type="radio" name="q2" value="c"> Lemon</label>
+        <h3>2. Enter the correct amount for each ingredient in the Blood Orange Martini:<br><small>Please enter numbers only (e.g. 2, 0.5)</small></h3>
+        <label>Blood orange juice (tbsp): <input type="text" name="blood" /></label><br>
+        <label>Vodka (oz): <input type="text" name="vodka" /></label><br>
+        <label>Triple sec (oz): <input type="text" name="triple" /></label><br>
+        <label>Lime juice (oz): <input type="text" name="lime" /></label><br>
+        <div class="feedback"></div>
     </div>
 
     <div class="question">
-        <h3>3. What is a common garnish for this cocktail?</h3>
-        <label><input type="radio" name="q3" value="a"> Orange peel</label>
-        <label><input type="radio" name="q3" value="b"> Basil leaf</label>
-        <label><input type="radio" name="q3" value="c"> Cherry</label>
+        <h3>3. What is the best way to mix a Blood Orange Martini?</h3>
+        <label><input type="radio" name="q4" value="a"> Stirred</label>
+        <label><input type="radio" name="q4" value="b"> Blended</label>
+        <label><input type="radio" name="q4" value="c"> Shaken</label>
+        <div class="feedback"></div>
     </div>
 
     <div class="question">
-        <h3>4. What kind of glass is usually used?</h3>
-        <label><input type="radio" name="q4" value="a"> Highball</label>
-        <label><input type="radio" name="q4" value="b"> Coupe</label>
-        <label><input type="radio" name="q4" value="c"> Martini</label>
-    </div>
-
-    <div class="question">
-        <h3>5. Which of these is a typical additional ingredient?</h3>
-        <label><input type="radio" name="q5" value="a"> Simple syrup</label>
-        <label><input type="radio" name="q5" value="b"> Triple sec</label>
-        <label><input type="radio" name="q5" value="c"> Bitters</label>
+        <h3>4. What is a popular garnish for this drink?</h3>
+        <label><input type="radio" name="q5" value="a"> Mint leaves</label>
+        <label><input type="radio" name="q5" value="b"> Blood orange slice</label>
+        <label><input type="radio" name="q5" value="c"> Lime wheel</label>
+        <div class="feedback"></div>
     </div>
 
     <button type="submit" class="submit-btn">Submit</button>
 </form>
+<div id="finalFeedback"></div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-    /* correct answers by radio value */
-    const KEY = { q1: 'a', q2: 'a', q3: 'a', q4: 'c', q5: 'b' };
-    let tries = 0;
+    const KEY = {
+        q1: 'a',
+        q4: 'c',
+        q5: 'b'
+    };
+    const FEEDBACK = {
+        q1: 'Hint: It’s the most neutral spirit.',
+        q4: 'Hint: Think James Bond style.',
+        q5: 'Hint: Use the fruit that gives the drink its name.'
+    };
 
+    let tries = 0;
     const form = document.getElementById('quizForm');
     const scoreLine = document.getElementById('scoreLine');
+    const correctMsg = document.getElementById('correctMsg');
+    const finalFeedback = document.getElementById('finalFeedback');
+
     updateScore(0);
 
     form.addEventListener('submit', e => {
-        e.preventDefault(); tries++;
+        e.preventDefault();
+        tries++;
         let right = 0;
-        [...form.querySelectorAll('.question')].forEach(q => {
-            const name = q.querySelector('input').name;
+        finalFeedback.textContent = '';
+        finalFeedback.className = '';
+        correctMsg.textContent = '';
+
+        ['q1', 'q4', 'q5'].forEach(qName => {
+            const q = form.querySelector(`[name="${qName}"]`).closest('.question');
             const chosen = q.querySelector('input:checked');
-            /* no pick → treat as wrong */
-            if (!chosen) { markWrong(q); return; }
-            if (chosen.value === KEY[name]) {
-                lockCorrect(q); right++;
-            } else {
+            const fb = q.querySelector('.feedback');
+            if (!chosen || chosen.value !== KEY[qName]) {
                 markWrong(q);
+                fb.textContent = FEEDBACK[qName];
+            } else {
+                lockCorrect(q);
+                fb.textContent = '';
+                right++;
             }
         });
+
+        const inputQuestion = form.querySelector('input[name="blood"]').closest('.question');
+        const fbInput = inputQuestion.querySelector('.feedback');
+        const expected = {
+            blood: ['3'],
+            vodka: ['2'],
+            triple: ['0.5', '.5', '0.50'],
+            lime: ['0.5', '.5', '0.50']
+        };
+
+        let correctCount = 0;
+        Object.entries(expected).forEach(([key, values]) => {
+            const input = form.querySelector(`input[name="${key}"]`);
+            if (input && values.includes(input.value.trim())) {
+                correctCount++;
+            }
+        });
+
+        if (correctCount === Object.keys(expected).length) {
+            lockCorrect(inputQuestion);
+            fbInput.textContent = '';
+        } else {
+            markWrong(inputQuestion);
+            fbInput.textContent = `Hint: Use the exact amounts from the recipe. You got ${correctCount}/${Object.keys(expected).length} correct.`;
+        }
+
+        right += correctCount;
         updateScore(right);
-        if (right === Object.keys(KEY).length) {
-            alert('Perfect! 🎉');
+
+        if (right === 7) {
+            correctMsg.textContent = '🎉 Perfect score! You nailed every detail of the Blood Orange Martini!';
         }
     });
 
     function lockCorrect(q) {
-        q.classList.remove('wrong'); q.classList.add('locked');
+        q.classList.remove('wrong');
+        q.classList.add('locked');
         q.querySelectorAll('label').forEach(l => l.style.fontWeight = '700');
     }
 
@@ -109,7 +231,7 @@
     }
 
     function updateScore(r) {
-        scoreLine.textContent = `Score ${r}/${Object.keys(KEY).length} — Attempt #${tries || 1}`;
+        scoreLine.textContent = `Score ${r}/7 — Attempt #${tries || 1}`;
     }
 </script>
 {% endblock %}

@@ -1,209 +1,142 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'navbar.html' %}
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cocktail Bar</title>
+{% block title %}Step 4: Perpare the glass – Cocktail Bar{% endblock %}
 
-  <!-- keep this if you have additional global styles -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+{% block extra_head %}
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 
-  <!-- ===== extra CSS for the cocktail page ===== -->
-  <style>
-    /* ----- basic reset / fonts ----- */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        Roboto, sans-serif;
-      background: #fff8ea;
-      /* light cream */
-      color: #333;
-    }
+  body {
+    background: #fff8ea;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #333;
+  }
 
-    /* ===== cocktail layout ===== */
-    .cocktail-wrapper {
-      display: flex;
-      gap: 2.5rem;
-      padding: 2rem 1.5rem;
-    }
+  .progress-wrapper {
+    width: 100%;
+    height: 8px;
+    background: #e4e4e4;
+  }
 
-    /* -- left column -- */
-    .left-panel {
-      flex: 1 1 48ch;
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-      font-size: 1.2rem;
-    }
+  .progress-bar {
+    height: 100%;
+    background: #4d6fb3;
+    width: calc(var(--pct) * 1%);
+    transition: width .25s;
+  }
 
-    .step-tag {
-      align-self: flex-start;
-      font-weight: bold;
-      border: 2px solid #f4b400;
-      padding: 0.6rem 1.2rem;
-      background: #fff5cc;
-      color: #8a6d00;
-      border-radius: 6px;
-      font-size: 1.1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
+  .cocktail-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 1.5rem;
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
 
-    .ingredients-card {
-      border: 2px solid #274c77;
-      border-radius: 8px;
-      background: #eef3f9;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    }
+  .step-tag {
+    font-weight: bold;
+    border: 2px solid #f4b400;
+    padding: 0.6rem 1.2rem;
+    background: #fff5cc;
+    color: #8a6d00;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+  }
 
-    .ingredients-card h2 {
-      padding: 1rem 1.5rem;
-      background: #274c77;
-      color: #fff;
-      font-size: 1.8rem;
-      border-top-left-radius: 6px;
-      border-top-right-radius: 6px;
-      margin-bottom: 0.5rem;
-    }
+  .info {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+  }
 
-    .ingredients-card ul {
-      font-family: 'Quicksand', sans-serif;
-      list-style: disc;
-      padding: 1rem 2rem 1.5rem 2rem;
-      line-height: 1.8;
-      font-size: 2.1rem;
-      color: #2a2a2a;
-    }
+  .ingredients-card {
+    border: 2px solid #274c77;
+    border-radius: 8px;
+    background: #eef3f9;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    padding-bottom: 1rem;
+  }
 
-    .ingredients-card li {
-      margin-bottom: 0.5rem;
+  .ingredients-card h2 {
+    padding: 1rem 1.5rem;
+    background: #274c77;
+    color: #fff;
+    font-size: 1.8rem;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    font-family: 'Quicksand', sans-serif;
+    margin-bottom: 0.5rem;
+  }
 
-    }
+  .ingredients-card ul {
+    list-style: disc;
+    padding: 1rem 2rem;
+    text-align: left;
+    line-height: 1.8;
+    font-size: 1.15rem;
+    color: #2a2a2a;
+    font-family: 'Quicksand', sans-serif;
+  }
 
-    /* -- right column -- */
-    .right-panel {
-      flex: 1 1 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      justify-content: center;
-      gap: 2.5rem;
-      padding-right: 6rem;
-      padding-top: 1rem;
-    }
+  .ingredients-card li {
+    margin-bottom: 0.5rem;
+  }
 
-    /* Make the drink photo smaller and rounded */
-    .drink-photo {
-      width: 100%;
-      max-width: 440px;
-      /* was 580px */
-      height: auto;
-      border-radius: 40px;
-      object-fit: cover;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      filter: brightness(1.02) contrast(1.05);
-    }
+  .next-btn {
+    margin-top: 2rem;
+    background: linear-gradient(135deg, #4d6fb3, #3b5898);
+    color: #fff;
+    border: none;
+    padding: 0.9rem 2rem;
+    font-size: 1.3rem;
+    border-radius: 10px;
+    font-weight: bold;
+    letter-spacing: 0.8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
 
-    .drink-photo:hover {
-      transform: scale(1.03);
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
-      filter: brightness(1.08) saturate(1.1);
-    }
+  .next-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #3b5898, #2f467e);
+  }
+</style>
+{% endblock %}
 
-    .next-btn {
-      background: linear-gradient(135deg, #4d6fb3, #3b5898);
-      color: #fff;
-      border: none;
-      padding: 0.9rem 2rem;
-      font-size: 1.3rem;
-      border-radius: 10px;
-      font-weight: bold;
-      letter-spacing: 0.8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      text-decoration: none;
-    }
+{% block content %}
+{% set current = 4 %}
 
-    .next-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-      background: linear-gradient(135deg, #3b5898, #2f467e);
-    }
+<div class="progress-wrapper">
+  <div class="progress-bar" style="--pct: {{ current * 20 }};"></div>
+</div>
+<div style="padding: 1rem 2rem;">
+  <a href="{{ url_for('bloody_orange_martini_3') }}" style="text-decoration: none; color: #4d6fb3; font-weight: bold; font-size: 1rem;">← Back to Step 3</a>
+</div>
 
-    /* === progress bar === */
-    .progress-wrapper {
-      width: 100%;
-      height: 8px;
-      background: #e4e4e4;
-    }
+<main class="cocktail-wrapper">
+  <span class="step-tag">Step 4: Prepare the Glass</span>
+  <p class="info">Let's garnish and prepare the glass for serving!</p>
 
-    .progress-bar {
-      height: 100%;
-      background: #4d6fb3;
-      width: calc(var(--pct) * 1%);
-      /* --pct is a number (20‑100) set inline */
-      transition: width .25s;
-    }
-  </style>
-</head>
-
-
-
-<body>
-  <nav class="navbar">
-    <div class="logo-container">
-      <div class="logo-text">COCKTAIL BAR</div>
-      <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="Logo" class="logo-img">
-    </div>
-    <ul class="nav-links">
-      <li><a href="#">Recipe Book</a></li>
-      <li><a href="#">Tool Book</a></li>
+  <div class="ingredients-card">
+    <h2>Time to Pour the Drink Into the Glass!</h2>
+    <ul>
+      <li>Salt</li>
+      <li>Lime</li>
+      <li>Ice</li>
     </ul>
-  </nav>
-
-  </nav>
-
-  {# ---------- progress bar ---------- #}
-  {% set current = 4 %} {# 1‑5 for each page #}
-  <div class="progress-wrapper">
-    <div class="progress-bar" style="--pct: {{ current * 20 }};"></div>
   </div>
 
-
-
-  <!-- === Main cocktail content – goes right after your navbar === -->
-  <main class="cocktail-wrapper">
-    <!-- left column -->
-    <section class="left-panel">
-      <span class="step-tag">Step 4 Preparing the Glass</span>
-
-      <div class="ingredients-card">
-        <h2>TIME TO POUR THE DRINK INTO THE GLASS!</h2>
-        <ul>
-          <li>Salt</li>
-          <li>Lime</li>
-          <li>Ice</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- right column -->
-    <section class="right-panel">
-      <img
-        src="https://images.squarespace-cdn.com/content/v1/5b4791232714e5918acd892e/1624461346038-R2OIEVYKMULOGJ3972KL/Classic+Margarita"
-        alt="Classic margarita with salt rim and lime wheel" class="drink-photo" />
-      <a href="{{ url_for('bloody_orange_martini_5') }}" class="next-btn">NEXT STEP</a>
-
-    </section>
-  </main>
-</body>
-
-</html>
+  <a href="{{ url_for('bloody_orange_martini_5') }}" class="next-btn">Next Step</a>
+</main>
+{% endblock %}

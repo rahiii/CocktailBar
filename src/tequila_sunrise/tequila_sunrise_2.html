@@ -1,229 +1,297 @@
 {% extends 'navbar.html' %}
-{% block title %}Step 2 – Build the Drink | Cocktail Bar{% endblock %}
+
+{% block title %}Step 2: Build the Tequila Sunrise | Cocktail Bar{% endblock %}
 
 {% block extra_head %}
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 <style>
-    body {
-        background: #fff7f3;
-        font-family: system-ui, Roboto, sans-serif
-    }
+  body {
+    background: #fff8ea;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #333;
+  }
 
-    .step-tag {
-        display: inline-block;
-        margin: 2rem 1.5rem 1.5rem;
-        padding: .5rem 1rem;
-        font-weight: bold;
-        border: 2px solid #f4a623;
-        background: #fff1d6
-    }
+  .progress-wrapper {
+    width: 100%;
+    height: 8px;
+    background: #e4e4e4;
+  }
 
-    .instructions {
-        float: left;
-        width: 320px;
-        margin-left: 1.5rem;
-        padding: 1.5rem;
-        border: 2px solid #d64234;
-        background: #ffe9e4;
-        font-size: 1.05rem
-    }
+  .progress-bar {
+    height: 100%;
+    background: #c0392b;
+    width: calc(var(--pct) * 1%);
+    transition: width .25s;
+  }
 
-    .instructions h2 {
-        text-align: center;
-        margin-bottom: .5rem
-    }
+  .step-tag {
+    font-weight: bold;
+    border: 2px solid #e74c3c;
+    padding: 0.6rem 1.2rem;
+    background: #fdecea;
+    color: #b0302c;
+    border-radius: 6px;
+    margin: 1rem auto 1rem;
+    display: block;
+    text-align: center;
+    max-width: fit-content;
+  }
 
-    .warning {
-        color: #d64234;
-        font-weight: 700;
-        text-align: center;
-        margin-bottom: 1rem
-    }
+  .step-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 3rem;
+    padding: 2rem 1.5rem;
+  }
 
-    .glass-area {
-        position: relative;
-        margin-left: 360px;
-        min-height: 600px
-    }
+  .left-panel, .right-panel {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    padding: 1.5rem;
+  }
 
-    .glass {
-        display: block;
-        width: 140px;
-        margin: 100px auto 0
-    }
+  .left-panel {
+    position: relative;
+    width: 550px;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-    .ingredient {
-        position: absolute;
-        width: 80px;
-        cursor: grab
-    }
+  .shaker {
+    width: 180px;
+    z-index: 1;
+  }
 
-    .ingredient img {
-        width: 100%
-    }
+  .ingredient {
+    position: absolute;
+    width: 90px;
+    cursor: grab;
+    transition: transform 0.2s;
+  }
 
-    .congrats-btn {
-        display: block;
-        margin: 1rem auto;
-        padding: .75rem 1.2rem;
-        background: #d4f8d4;
-        color: #2a7f2a;
-        border: 2px solid #2a7f2a;
-        border-radius: 4px;
-        text-align: center;
-        font-weight: bold;
-        max-width: 320px
-    }
+  .ingredient img {
+    width: 100%;
+    border-radius: 10px;
+  }
 
-    .modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, .5);
-        display: flex;
-        align-items: center;
-        justify-content: center
-    }
+  #tequila { top: 40px; left: 20px; }
+  #orange { top: 160px; right: 30px; }
+  #ice { bottom: 160px; left: 20px; }
+  #wrong { top: 450px; left: 160px; }
 
-    .modal.hidden {
-        display: none
-    }
+  .right-panel {
+    max-width: 400px;
+    background: #fef0ef;
+    border: 2px solid #e74c3c;
+    font-size: 1.1rem;
+    display: inline-block;
+    align-self: flex-start;
+    text-align: center;
+  }
 
-    .modal-content {
-        background: #fff;
-        padding: 1.5rem;
-        border-radius: 6px;
-        width: 90%;
-        max-width: 320px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, .2)
-    }
+  .right-panel h2 {
+    font-size: 1.4rem;
+    margin-bottom: 0.75rem;
+    color: #2a2a2a;
+  }
 
-    .modal-content form {
-        display: flex;
-        flex-direction: column;
-        gap: .5rem;
-        margin-top: 1rem
-    }
+  .warning {
+    font-weight: bold;
+    color: #b30000;
+    margin-bottom: 1rem;
+  }
 
-    .modal-content button {
-        margin-top: 1rem;
-        padding: .5rem;
-        font-size: 1rem;
-        border: 2px solid #d64234;
-        background: #d64234;
-        color: #fff;
-        border-radius: 4px
-    }
+  .right-panel ul {
+    list-style: none;
+    text-align: left;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
 
-    /* === progress bar === */
-    .progress-wrapper {
-        width: 100%;
-        height: 8px;
-        background: #e4e4e4;
-    }
+  .right-panel li::before {
+    content: '•';
+    color: #333;
+    margin-right: 0.5rem;
+  }
 
-    .progress-bar {
-        height: 100%;
-        background: #4d6fb3;
-        width: calc(var(--pct) * 1%);
-        transition: width .25s;
-    }
+  .next-btn {
+    margin-top: 1.5rem;
+    padding: 0.6rem 1.5rem;
+    background: #ccc;
+    color: #666;
+    font-weight: 600;
+    border-radius: 8px;
+    font-size: 1rem;
+    text-decoration: none;
+    pointer-events: none;
+    border: 2px solid #999;
+    display: block;
+  }
+
+  .next-btn.active {
+    background: #c0392b;
+    color: white;
+    border-color: #c0392b;
+    pointer-events: auto;
+    cursor: pointer;
+  }
 </style>
 {% endblock %}
 
 {% block content %}
-
 {% set current = 2 %}
 <div class="progress-wrapper">
-    <div class="progress-bar" style="--pct: {{ current * 20 }};"></div>
+  <div class="progress-bar" style="--pct: {{ current * 20 }};"></div>
+</div>
+<div style="padding: 1rem 2rem;">
+  <a href="{{ url_for('tequila_sunrise') }}" style="text-decoration: none; color: #c0392b; font-weight: bold; font-size: 1rem;">← Back to Step 1</a>
 </div>
 
-<div class="step-tag">Step 2 ) Build the Drink</div>
+<span class="step-tag">Step 2: Build the Tequila Sunrise</span>
 
-<div class="instructions">
-    <h2>DRAG & DROP AN ITEM</h2>
-    <div class="warning">ADD INGREDIENTS IN ANY ORDER</div>
+<section class="step-wrapper">
+  <div class="left-panel">
+    <img id="shaker" class="shaker" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Highball_Glass.jpg/800px-Highball_Glass.jpg" alt="Highball Glass"
+         ondrop="drop(event)" ondragover="allowDrop(event)">
+    {% for id, alt in [('tequila','Tequila'), ('orange','Orange Juice'), ('ice','Ice'), ('wrong','Wrong Ingredient')] %}
+    <div id="{{ id }}" class="ingredient" draggable="true" ondragstart="drag(event)">
+      <img src="/static/images/{{ id }}.png" alt="{{ alt }}" />
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="right-panel">
+    <h2>DRAG AND DROP AN ITEM</h2>
+    <div class="warning">Use the correct ingredients to build your drink!</div>
     <ul>
-        <li>tequila</li>
-        <li>orange juice</li>
-        <li>grenadine</li>
+      <li>Tequila</li>
+      <li>Orange juice</li>
+      <li>Ice</li>
     </ul>
-</div>
-
-<div class="glass-area">
-    <img id="glass" class="glass"
-        src="https://images.unsplash.com/photo-1542736667-069246bdbc4d?auto=format&fit=crop&w=200&q=60"
-        alt="Highball glass" ondrop="drop(event)" ondragover="allowDrop(event)">
-
-    <!-- draggable items -->
-    <div id="tequila" class="ingredient" style="top:20px;left:25%" draggable="true" ondragstart="drag(event)">
-        <img src="https://images.unsplash.com/photo-1564758866810-43c59605eb1d?auto=format&fit=crop&w=200&q=60"
-            alt="Tequila">
+    <div style="display: flex; justify-content: center;">
+      <a id="nextBtn" class="next-btn">Next Step</a>
     </div>
-    <div id="oj" class="ingredient" style="top:150px;left:70%" draggable="true" ondragstart="drag(event)">
-        <img src="https://images.unsplash.com/photo-1553531384-cc64ac1c0f8f?auto=format&fit=crop&w=200&q=60"
-            alt="Orange juice">
-    </div>
-    <div id="grenadine" class="ingredient" style="top:280px;left:25%" draggable="true" ondragstart="drag(event)">
-        <img src="https://images.unsplash.com/photo-1519014404880-41c7c259f069?auto=format&fit=crop&w=200&q=60"
-            alt="Grenadine">
-    </div>
-    <div id="wrong" class="ingredient" style="top:410px;left:70%" draggable="true" ondragstart="drag(event)">
-        <img src="https://images.unsplash.com/photo-1585145191800-35d69ddb5e8c?auto=format&fit=crop&w=200&q=60"
-            alt="Wrong ingredient">
-    </div>
-</div>
-
-<!-- Quiz modal -->
-<div id="quiz-modal" class="modal hidden">
-    <div class="modal-content">
-        <h3 id="quiz-question">Question</h3>
-        <form id="quiz-form"></form>
-    </div>
-</div>
+  </div>
+</section>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-    const modal = document.getElementById('quiz-modal');
-    const q = document.getElementById('quiz-question');
-    const form = document.getElementById('quiz-form');
-    let current = null, count = 0;
+  const nextBtn = document.getElementById('nextBtn');
+  let correctCount = 0;
+  const required = ['tequila', 'orange', 'ice'];
 
-    const choices = {
-        tequila: ['1 oz', '2 oz', '2.5 oz'],
-        oj: ['2 oz', '4 oz', '6 oz'],
-        grenadine: ['¼ oz', '½ oz', '1 oz']
-    };
-    const answers = { tequila: '2 oz', oj: '4 oz', grenadine: '½ oz' };
+  const questions = {
+    tequila: 'How much tequila goes into a Tequila Sunrise?',
+    orange: 'How much orange juice is used?',
+    ice: 'What kind of glass do you use and do you need ice?'
+  };
 
-    function allowDrop(e) { e.preventDefault(); }
-    function drag(e) { e.dataTransfer.setData('text', e.currentTarget.id); }
-    function drop(e) {
-        e.preventDefault();
-        const id = e.dataTransfer.getData('text');
-        if (id === 'wrong') { alert("Not part of this recipe!"); return; }
-        current = id;
-        const label = id === 'oj' ? 'orange juice' : id;
-        q.textContent = `How much ${label} did you add?`;
-        form.innerHTML = choices[id].map(c => `<label><input type="radio" name="amt" value="${c}" required> ${c}</label>`).join('') +
-            '<button type="submit">Submit</button>';
-        modal.classList.remove('hidden');
-    }
-    form.addEventListener('submit', e => {
-        e.preventDefault();
-        if (form.amt.value !== answers[current]) { alert('Try again!'); return; }
-        document.getElementById(current)?.remove();
-        modal.classList.add('hidden');
-        if (++count === 3) {
-            const btn = document.createElement('a');
-            btn.className = 'congrats-btn';
-            btn.href = "{{ url_for('tequila_sunrise_3') }}";
-            btn.textContent = '🎉  Great!  Next Step';
-            document.body.appendChild(btn);
-        }
+  const options = {
+    tequila: ['1 oz', '1.5 oz', '2 oz', '3 oz'],
+    orange: ['2 oz', '3 oz', '4 oz', '5 oz'],
+    ice: ['Highball glass with ice', 'Martini glass, no ice', 'Rocks glass with crushed ice']
+  };
+
+  const correctAnswers = {
+    tequila: '2 oz',
+    orange: '4 oz',
+    ice: 'Highball glass with ice'
+  };
+
+  function allowDrop(ev) {
+    ev.preventDefault();
+  }
+
+  function drag(ev) {
+    ev.dataTransfer.setData('text', ev.target.id);
+  }
+
+  function drop(ev) {
+    ev.preventDefault();
+    const id = ev.dataTransfer.getData('text');
+    if (!required.includes(id)) return;
+    askQuestion(id);
+  }
+
+  function askQuestion(id) {
+    const modal = document.createElement('div');
+    Object.assign(modal.style, {
+      position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
+      background: 'rgba(0,0,0,0.6)', display: 'flex', alignItems: 'center',
+      justifyContent: 'center', zIndex: '9999'
     });
-    modal.addEventListener('click', e => { if (e.target === modal) modal.classList.add('hidden'); });
+
+    const content = document.createElement('div');
+    Object.assign(content.style, {
+      background: '#fff', padding: '2rem', borderRadius: '10px',
+      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)', textAlign: 'center',
+      maxWidth: '350px', position: 'relative'
+    });
+
+    const closeBtn = document.createElement('span');
+    closeBtn.textContent = '×';
+    Object.assign(closeBtn.style, {
+      position: 'absolute', top: '10px', right: '15px', cursor: 'pointer',
+      fontSize: '1.4rem', fontWeight: 'bold', color: '#999'
+    });
+    closeBtn.onclick = () => document.body.removeChild(modal);
+    content.appendChild(closeBtn);
+
+    const questionText = document.createElement('h3');
+    questionText.textContent = questions[id];
+    questionText.style.marginBottom = '1rem';
+    content.appendChild(questionText);
+
+    options[id].forEach(opt => {
+      const btn = document.createElement('button');
+      btn.textContent = opt;
+      Object.assign(btn.style, {
+        margin: '0.5rem', padding: '0.5rem 1rem', border: '2px solid #c0392b',
+        background: 'white', borderRadius: '6px', cursor: 'pointer', fontWeight: '600',
+        transition: 'all 0.2s ease'
+      });
+      btn.onmouseover = () => {
+        btn.style.background = '#fdecea';
+        btn.style.boxShadow = '0 2px 6px rgba(0,0,0,0.15)';
+      };
+      btn.onmouseout = () => {
+        btn.style.background = 'white';
+        btn.style.boxShadow = 'none';
+      };
+      btn.onclick = () => {
+        const feedback = document.createElement('div');
+        feedback.style.marginTop = '1rem';
+        feedback.style.fontWeight = '600';
+        feedback.style.fontSize = '1rem';
+
+        if (opt === correctAnswers[id]) {
+          feedback.textContent = 'Correct!';
+          feedback.style.color = 'green';
+          document.getElementById(id)?.remove();
+          correctCount++;
+          setTimeout(() => document.body.removeChild(modal), 800);
+          if (correctCount === required.length) {
+            nextBtn.classList.add('active');
+            nextBtn.href = "{{ url_for('tequila_sunrise_3') }}";
+          }
+        } else {
+          feedback.textContent = 'Try again!';
+          feedback.style.color = 'red';
+        }
+        content.appendChild(feedback);
+      };
+      content.appendChild(btn);
+    });
+
+    modal.appendChild(content);
+    document.body.appendChild(modal);
+  }
 </script>
 {% endblock %}
